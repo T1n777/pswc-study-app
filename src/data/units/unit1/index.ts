@@ -1,0 +1,12 @@
+export { introToProgramming } from './topics/intro-to-programming';
+export { salientFeatures } from './topics/salient-features';
+export { programStructure } from './topics/program-structure';
+export { variables } from './topics/variables';
+export { dataTypes } from './topics/data-types';
+export { qualifiers } from './topics/qualifiers';
+export { operatorsExpressions } from './topics/operators-expressions';
+export { controlStructures } from './topics/control-structures';
+export { ioFunctions } from './topics/io-functions';
+export { languageBehaviors } from './topics/language-behaviors';
+export { singleCharIo } from './topics/single-char-io';
+export { codingStandards } from './topics/coding-standards';
