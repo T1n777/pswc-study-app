@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { CodeBlock } from '../content/CodeBlock';
 import { cn } from '../../utils/cn';
 import type { GDBWalkthrough as GDBWalkthroughType } from '../../types';
 
