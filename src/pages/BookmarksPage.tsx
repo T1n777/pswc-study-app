@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useAppStore } from '../store';
 import { EmptyState } from '../components/shared/EmptyState';
 import { Badge } from '../components/shared/Badge';

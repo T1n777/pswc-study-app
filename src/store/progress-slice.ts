@@ -19,7 +19,7 @@ function getTodayDateString(): string {
   return new Date().toISOString().split('T')[0];
 }
 
-export const createProgressSlice: StateCreator<ProgressSlice> = (set, get) => ({
+export const createProgressSlice: StateCreator<ProgressSlice> = (set, _get) => ({
   topicProgress: {},
   quizAttempts: [],
   streak: { current: 0, lastDate: '' },

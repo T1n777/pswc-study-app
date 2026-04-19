@@ -67,7 +67,7 @@ export const conditionalCompilation: Topic = {
           title: 'Cross-Platform C Code',
           content: "A major interview topic: \"How do you write C code that works on both Windows and Linux when they use different APIs?\" Answer: \"By using conditional compilation. #ifdef _WIN32 includes the #include <windows.h> block, and #elif __linux__ includes the <unistd.h> POSIX block. The compiler auto-defines these OS macros for you.\"",
           relatedTopicIds: [],
-          frequency: 'very common',
+          frequency: 'common',
         },
       ],
       checkpoints: [

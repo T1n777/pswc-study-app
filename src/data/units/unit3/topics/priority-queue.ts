@@ -52,7 +52,7 @@ export const priorityQueue: Topic = {
           title: 'Priority Queue vs Heap',
           content: 'A brutal technical interview reality check: While a Linked List PQ works, its O(N) insertion time makes it architecturally unviable for millions of records. If an interviewer asks you to build a high-performance Priority Queue, they expect you to construct a "Binary Heap" (Min-Heap or Max-Heap). Heaps use mathematical array manipulation to guarantee O(log N) speeds for BOTH insertion and extraction.',
           relatedTopicIds: [],
-          frequency: 'very common',
+          frequency: 'common',
         },
       ],
       checkpoints: [

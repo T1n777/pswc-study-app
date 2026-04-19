@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getTopicBySlug, getTopicById, getUnitBySlug, curriculumMap } from '../data';
 import { useAppStore } from '../store';
 import { Tabs } from '../components/shared/Tabs';
@@ -20,7 +20,6 @@ const topicTabs: TabItem[] = [
 
 export function TopicPage() {
   const { unitSlug, topicSlug } = useParams<{ unitSlug: string; topicSlug: string }>();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('learn');
   const unit = getUnitBySlug(unitSlug || '');
   const topic = getTopicBySlug(unitSlug || '', topicSlug || '');
@@ -173,7 +172,7 @@ export function TopicPage() {
                   </div>
                   
                   <div className="rounded-xl overflow-hidden shadow-lg border border-[var(--color-border-secondary)]">
-                    <CodeBlock code={example.code} title={`${example.slug || 'example'}.c`} />
+                    <CodeBlock code={example.code} title={`${example.id || 'example'}.c`} />
                   </div>
 
                   {/* Expected Output */}

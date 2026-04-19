@@ -7,7 +7,6 @@ export function ProgressPage() {
   const topicProgress = useAppStore((s) => s.topicProgress);
   const quizAttempts = useAppStore((s) => s.quizAttempts);
   const streak = useAppStore((s) => s.streak);
-  const totalTimeSpent = useAppStore((s) => s.totalTimeSpent);
 
   const allTopics = curriculumMap.flatMap((u) => u.topics);
   const completed = allTopics.filter((t) => topicProgress[t.id]?.status === 'completed').length;

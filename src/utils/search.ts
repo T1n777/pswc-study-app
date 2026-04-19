@@ -1,6 +1,4 @@
 import { curriculumMap } from '../data/curriculum-map';
-import type { Topic, Unit } from '../types';
-
 export interface SearchResult {
   type: 'unit' | 'topic';
   id: string;

@@ -54,7 +54,7 @@ export const lists: Topic = {
           title: 'Arrays vs Linked Lists (Time Complexity)',
           content: 'The definitive architectural trade-off interview question: Arrays grant O(1) instantaneous access via index math (`base_addr + offset`), but suffer O(N) catastrophic shifting when inserting at the front. Linked Lists suffer O(N) abysmal traversal times (you must walk pointer-by-pointer), but guarantee O(1) instantaneous insertion at the `head` by simply rewiring two pointers.',
           relatedTopicIds: [],
-          frequency: 'very common',
+          frequency: 'common',
         },
       ],
       checkpoints: [
@@ -131,7 +131,7 @@ export const lists: Topic = {
           title: 'Reversing a Linked List',
           content: 'The ultimate rite of passage in systems interviews: "Reverse a singly linked list in place in O(N) time and O(1) space." You must juggle three pointers simultaneously: `prev`, `curr`, and `next`. You meticulously traverse the list, temporarily saving `curr->next`, violently reversing `curr->next` to aim at `prev`, and then sliding the entire three-pointer window one step forward.',
           relatedTopicIds: [],
-          frequency: 'very common',
+          frequency: 'common',
         },
       ],
       checkpoints: [

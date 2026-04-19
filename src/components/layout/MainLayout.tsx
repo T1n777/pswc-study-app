@@ -5,8 +5,6 @@ import { MobileNav } from './MobileNav';
 import { ScrollToTop } from '../shared/ScrollToTop';
 import { useAppStore } from '../../store';
 import { useEffect } from 'react';
-import { cn } from '../../utils/cn';
-
 export function MainLayout() {
   const theme = useAppStore((s) => s.theme);
   const sidebarCollapsed = useAppStore((s) => s.sidebarCollapsed);
