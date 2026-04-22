@@ -15,8 +15,9 @@ export function ProgrammingPracticePage() {
 
     const seen = new Set<string>();
     let problems = allProblems.filter(p => {
-      if (seen.has(p.id)) return false;
-      seen.add(p.id);
+      const key = `${p.title.trim()}|${p.problemStatement.trim()}`.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     });
     if (selectedDifficulty) {

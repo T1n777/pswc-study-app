@@ -35,8 +35,9 @@ export function OutputPredictionPage() {
 
     const seen = new Set<string>();
     return rawQuestions.filter(q => {
-      if (seen.has(q.id)) return false;
-      seen.add(q.id);
+      const key = `${q.type}|${q.question.trim()}|${(q.code || '').trim()}`.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     });
   }, []);

@@ -32,8 +32,9 @@ export function DebuggingLabPage() {
 
     const seen = new Set<string>();
     return rawChallenges.filter(c => {
-      if (seen.has(c.id)) return false;
-      seen.add(c.id);
+      const key = `${c.type}|${c.question.trim()}|${(c.code || '').trim()}`.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     });
   }, []);
