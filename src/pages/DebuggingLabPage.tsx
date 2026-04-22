@@ -14,12 +14,12 @@ export function DebuggingLabPage() {
 
   // Collect all spot-bug questions
   const allChallenges = useMemo(() => {
-    const challenges: any[] = [];
+    const rawChallenges: any[] = [];
     curriculumMap.forEach(unit => {
       unit.topics.forEach(topic => {
         topic.theoryQuestions.forEach(q => {
           if (q.type === 'spot-bug') {
-            challenges.push({
+            rawChallenges.push({
               ...q,
               unitId: unit.id,
               unitTitle: unit.title,
@@ -29,7 +29,13 @@ export function DebuggingLabPage() {
         });
       });
     });
-    return challenges;
+
+    const seen = new Set<string>();
+    return rawChallenges.filter(c => {
+      if (seen.has(c.id)) return false;
+      seen.add(c.id);
+      return true;
+    });
   }, []);
 
   // Filter challenges

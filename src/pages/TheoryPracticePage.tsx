@@ -18,11 +18,18 @@ export function TheoryPracticePage() {
   const [hasAnsweredCurrent, setHasAnsweredCurrent] = useState(false);
 
   const filteredQuestions = useMemo(() => {
-    let questions = curriculumMap.flatMap(u => 
+    const allQuestions = curriculumMap.flatMap(u => 
       u.topics.flatMap(t => 
         (t.theoryQuestions || []).map(q => ({ ...q, unitId: u.id }))
       )
     );
+
+    const seen = new Set<string>();
+    let questions = allQuestions.filter(q => {
+      if (seen.has(q.id)) return false;
+      seen.add(q.id);
+      return true;
+    });
     if (selectedUnit) {
       questions = questions.filter(q => q.unitId === selectedUnit);
     }

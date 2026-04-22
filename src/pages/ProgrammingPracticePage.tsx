@@ -9,9 +9,16 @@ export function ProgrammingPracticePage() {
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
 
   const filteredProblems = useMemo(() => {
-    let problems = curriculumMap.flatMap((u) =>
+    const allProblems = curriculumMap.flatMap((u) =>
       u.topics.flatMap((t) => (t.programmingProblems || []).map(p => ({ ...p, unitId: u.id, topicId: t.id })))
     );
+
+    const seen = new Set<string>();
+    let problems = allProblems.filter(p => {
+      if (seen.has(p.id)) return false;
+      seen.add(p.id);
+      return true;
+    });
     if (selectedDifficulty) {
       problems = problems.filter((p) => p.difficulty === selectedDifficulty);
     }

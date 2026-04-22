@@ -17,12 +17,12 @@ export function OutputPredictionPage() {
 
   // Collect all predict-output questions
   const allQuestions = useMemo(() => {
-    const questions: any[] = [];
+    const rawQuestions: any[] = [];
     curriculumMap.forEach(unit => {
       unit.topics.forEach(topic => {
         topic.theoryQuestions.forEach(q => {
           if (q.type === 'predict-output') {
-            questions.push({
+            rawQuestions.push({
               ...q,
               unitId: unit.id,
               unitTitle: unit.title,
@@ -32,7 +32,13 @@ export function OutputPredictionPage() {
         });
       });
     });
-    return questions;
+
+    const seen = new Set<string>();
+    return rawQuestions.filter(q => {
+      if (seen.has(q.id)) return false;
+      seen.add(q.id);
+      return true;
+    });
   }, []);
 
   // Filter questions
