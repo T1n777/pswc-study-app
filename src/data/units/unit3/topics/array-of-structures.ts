@@ -14,7 +14,11 @@ export const arrayOfStructures: Topic = {
       id: 'u3-t7-s1',
       title: 'Declaring and Accessing Array of Structs',
       slug: 'array-of-structs-basics',
-      description: 'An array of structures is a perfectly contiguous block of memory where every single element is a complete, independently addressable `struct`. This layout guarantees high-performance, sequential data access.',
+      description: `An array of structures is a contiguous block of memory where each element is a complete structure instance. Declaring Student roster[100] allocates space for 100 consecutive Student structures, laid out end-to-end in memory with no gaps between elements (beyond any internal padding within each structure). This layout provides the same O(1) indexed access as a primitive array — roster[i] computes the address as base + i * sizeof(Student) and returns the i-th structure — while allowing each element to contain multiple fields of different types (name, age, grade, student ID).
+
+This data structure is the C equivalent of a database table or a spreadsheet: each element is a record (row) containing multiple fields (columns). You initialize elements using either positional initializers (roster[0] = (Student){"Alice", 20, 3.8}) or by assigning to individual fields (roster[0].name = "Alice"; roster[0].age = 20). Because the elements are stored contiguously, iterating through the array with a simple for loop is extremely cache-friendly: the CPU prefetcher can predict the sequential memory access pattern and load upcoming elements into the cache before they are needed, resulting in high throughput.
+
+The primary limitation of an array of structures is the same as any static array: its size must be known at compile time (or allocated dynamically with malloc), and resizing requires allocating a new array and copying all elements. For applications that need a fixed collection of structured records (a class roster, a configuration table, a set of menu items), arrays of structures are the natural and efficient choice. For applications that need frequent insertion and deletion, a linked list of structures may be more appropriate despite its cache performance disadvantage.`,
       keyPoints: [
         'Declaration syntax: `struct TypeName arrayName[size];` (or simply `TypeName arrayName[size];` if using a typedef).',
         'The Syntax Hierarchy: To access a member, you must resolve the array index FIRST to grab the specific struct, and THEN apply the dot operator to access the member: `array[i].member`.',
@@ -82,7 +86,11 @@ export const arrayOfStructures: Topic = {
       id: 'u3-t7-s2',
       title: 'Searching and Sorting Arrays of Structs',
       slug: 'searching-sorting-struct-arrays',
-      description: 'Standard algorithms like Linear Search and Bubble Sort map perfectly to arrays of structures. The critical architectural difference is that you must explicitly define WHICH internal struct field acts as the primary key for the algorithm.',
+      description: `The standard algorithms you learn for primitive arrays \u2014 linear search, binary search, bubble sort, selection sort, insertion sort \u2014 all transfer directly to arrays of structures with one critical modification: you must specify which structure member serves as the key field for comparison. When sorting an array of integers, the comparison arr[j] > arr[j+1] is self-evident. When sorting an array of Student structures, you must decide whether to sort by name (alphabetically, using strcmp), by age (numerically, using > or <), by GPA (floating-point comparison), or by student ID. The algorithm's control flow (loops, swaps, boundary conditions) remains identical; only the comparison expression changes.
+
+When swapping elements during sorting, the entire structure is swapped, not just the key field. The three-line swap pattern (Student temp = arr[j]; arr[j] = arr[j+1]; arr[j+1] = temp) copies the full structure contents, which can be expensive for large structures. For arrays of very large structures, a common optimization is to sort an array of pointers to the structures instead of sorting the structures themselves \u2014 swapping two 8-byte pointers is dramatically faster than swapping two 200-byte structures.
+
+Searching follows the same principle: linear search iterates through the array comparing a specific field of each element to the target (e.g., strcmp(roster[i].name, target) == 0 for name-based search), and binary search requires the array to be pre-sorted by the search key. The qsort function from <stdlib.h> is particularly useful for arrays of structures, because its callback-based comparison function lets you sort by any field without modifying the sorting algorithm itself \u2014 you simply write a comparator function that accesses the appropriate member through a pointer cast.`,
       keyPoints: [
         'Searching: You iterate over the array, but evaluate your condition against a specific member (e.g., `if (array[i].id == target)`).',
         'Sorting: When sorting, the comparison evaluates a specific key (`array[i].score < array[j].score`).',

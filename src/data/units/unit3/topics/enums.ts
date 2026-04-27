@@ -14,7 +14,11 @@ export const enums: Topic = {
       id: 'u3-t11-s1',
       title: 'Defining and Using Enums',
       slug: 'defining-enums',
-      description: 'The human brain is poor at remembering that `state = 3` means the network connection failed. An `enum` acts as a compiler-enforced dictionary, allowing you to seamlessly map numeric states to human-readable names.',
+      description: `An enumeration (enum) in C is a user-defined type that assigns human-readable names to a set of integer constants. Instead of writing state = 3 and relying on comments or documentation to remember that 3 means "connection failed," you define enum ConnState { CONNECTED, DISCONNECTED, FAILED } and write state = FAILED. The compiler replaces each enum name with its corresponding integer value during compilation, so there is zero runtime overhead — enums are purely a compile-time abstraction that improves code readability, maintainability, and self-documentation.
+
+By default, the compiler assigns consecutive integer values starting from 0: the first enumerator gets 0, the second gets 1, and so on. You can override these defaults by explicitly assigning values: enum HttpStatus { OK = 200, NOT_FOUND = 404, SERVER_ERROR = 500 }. If you assign a value to one enumerator and leave the next unassigned, the compiler continues incrementing from the assigned value: in enum Color { RED = 5, GREEN, BLUE }, GREEN is 6 and BLUE is 7. This auto-increment behavior is convenient but can cause accidental value collisions if you are not careful.
+
+Unlike enums in languages like Java, Rust, or TypeScript, C enums are not type-safe. An enum variable is just an int under the hood, and the compiler will happily accept any integer value in an enum variable, even one that does not correspond to any defined enumerator. Writing state = 42 compiles without error even if 42 is not a valid ConnState value. This lack of type safety means that C enums should be thought of as named integer constants rather than true enumerated types. Despite this limitation, consistent use of enums dramatically improves code quality: switch statements on enum values make intent explicit, and modern compilers can warn when a switch does not cover all enumerators (with -Wswitch), catching logical errors at compile time.`,
       keyPoints: [
         'An `enum` (enumeration) is a custom data type consisting of a finite set of integral constants.',
         'Automatic Numbering: By default, the C compiler assigns the integer `0` to the first identifier. Each subsequent identifier is automatically incremented by 1.',
@@ -103,7 +107,11 @@ export const enums: Topic = {
       id: 'u3-t11-s2',
       title: 'Typedef with Enums',
       slug: 'typedef-enums',
-      description: 'As with structs, forcing the programmer to write the `enum` keyword before every variable declaration is tedious. Combining `typedef` with `enum` is the industry standard for creating clean, modern-looking code.',
+      description: `Just as with structures, C requires you to write the enum keyword before every variable declaration: enum Color c = RED. The typedef keyword eliminates this verbosity by creating a permanent alias: typedef enum { RED, GREEN, BLUE } Color allows you to write simply Color c = RED. This pattern is universally used in professional C codebases to make enum declarations indistinguishable from built-in types.
+
+The combination of typedef and enum also enables the creation of self-documenting function interfaces. A function declared as void setLED(Color c) immediately communicates that its parameter is a color, whereas void setLED(int c) communicates nothing about what integer values are valid. Although the compiler treats both as int, the typedef name serves as documentation that guides the programmer to use the correct set of named constants. Modern coding standards strongly encourage this practice because it catches logical errors earlier in the development process \u2014 a developer is much more likely to notice the mistake in setLED(42) than to question whether 42 is a valid raw integer.
+
+A common and powerful pattern combines enums with arrays to create lookup tables: const char *colorNames[] = {"Red", "Green", "Blue"}. Because the enum values are sequential integers starting from 0, they can be used directly as array indices: printf("%s", colorNames[RED]) prints "Red". This pattern is widely used for converting enum values to their string representations for logging, debugging output, and user-facing messages. It works perfectly as long as the enum values are contiguous and zero-based; if you assign custom non-sequential values, the array indexing trick breaks and you need a switch statement or a hash map instead.`,
       keyPoints: [
         'Syntax: By wrapping the definition in a typedef (`typedef enum { VAL1, VAL2 } TypeName;`), you create a globally recognized type alias.',
         'This allows you to declare variables natively using `TypeName varName;`, completely eliminating the need for the `enum` keyword.',
