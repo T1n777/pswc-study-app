@@ -5,7 +5,11 @@ export const dynamicMemory: Topic = {
   unitId: 'unit-3',
   title: 'Dynamic Memory Management',
   slug: 'dynamic-memory',
-  description: 'In modern languages, garbage collectors silently manage memory behind the scenes. C offers no such luxury. Here, you are granted absolute manual control over the system\'s RAM via the Heap. Understanding the architectural divide between the Stack and the Heap—and mastering `malloc`, `free`, and memory leaks—is the definitive rite of passage for every systems programmer.',
+  description: `In modern high-level languages, garbage collectors silently manage memory behind the scenes — allocating objects when needed and reclaiming them when no references remain. C offers no such luxury. Instead, C grants the programmer absolute manual control over the system's RAM via the heap, a large pool of memory that persists independently of function scope and whose lifetime is controlled entirely by explicit allocation (malloc, calloc, realloc) and deallocation (free) calls.
+
+Understanding the architectural divide between the stack and the heap is the definitive rite of passage for every systems programmer. Stack memory is fast (allocation is a single pointer decrement), automatic (variables are created when their scope is entered and destroyed when it exits), and limited (typically 1–8 MB). Heap memory is slower (allocation requires traversing a free-list or similar bookkeeping structure), manual (the programmer is solely responsible for both allocation and deallocation), and virtually unlimited (bounded only by available system memory). Every data structure whose size is unknown at compile time or whose lifetime must extend beyond the creating function requires heap allocation.
+
+The three cardinal sins of heap memory management are: memory leaks (allocating memory and losing all pointers to it, making it permanently unreclaimable), dangling pointers (freeing memory and then continuing to access it through a stale pointer), and double frees (calling free on the same pointer twice, corrupting the heap's internal bookkeeping and potentially enabling arbitrary code execution). These bugs are notoriously difficult to diagnose because their symptoms are often delayed and non-deterministic — a program may appear to work correctly for hours before the accumulated damage manifests as a crash in an unrelated function. Tools like Valgrind and AddressSanitizer are essential for detecting these errors in non-trivial programs.`,
   difficulty: 'advanced',
   prerequisites: ['u2-t3', 'u2-t4'],
   estimatedMinutes: 90,

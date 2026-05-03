@@ -5,7 +5,11 @@ export const arrayOfStructures: Topic = {
   unitId: 'unit-3',
   title: 'Array of Structures',
   slug: 'array-of-structures',
-  description: 'In real-world systems, data rarely exists in isolation. You don\'t just process one student; you process thousands. Combining arrays (for contiguous memory storage) with structures (for complex data grouping) is the architectural foundation of every in-memory database and list-processing system in C.',
+  description: `In real-world systems, data rarely exists in isolation: you do not process a single student, a single employee, or a single sensor reading — you process thousands. An array of structures combines the contiguous memory layout of arrays (enabling O(1) indexed access and excellent CPU cache performance) with the heterogeneous data grouping of structures (enabling each element to contain multiple fields of different types). This combination is the architectural foundation of every in-memory database, record-processing system, and list-based application in C.
+
+When you declare Student roster[100], the compiler allocates a single contiguous block of 100 × sizeof(Student) bytes on the stack (or on the heap via malloc). The structures are laid out back-to-back with no gaps between elements (beyond any internal padding within each structure), and any element can be accessed in constant time via roster[i]. Accessing a specific field requires the two-step syntax roster[i].name — indexing the array first to select a specific structure, then applying the dot operator to access a member within that structure.
+
+This data structure also introduces the practical challenge of sorting and searching structured records. When sorting an array of structures, the comparison targets a specific key field (e.g., roster[i].gpa > roster[j].gpa), but the swap must exchange entire structures — swapping only the key field would corrupt the data by detaching field values from their parent records. The standard library's qsort() function is particularly well-suited for this task, accepting a custom comparator function that can sort by any field without modifying the sorting algorithm itself.`,
   difficulty: 'intermediate',
   prerequisites: ['u2-t1', 'u3-t5'],
   estimatedMinutes: 45,

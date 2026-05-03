@@ -5,7 +5,11 @@ export const priorityQueue: Topic = {
   unitId: 'unit-3',
   title: 'Priority Queue',
   slug: 'priority-queue',
-  description: 'A structural mutation of the Queue where elements bypass the FIFO rule based on an absolute Priority Integer. The backbone of CPU Task Scheduling and algorithmic pathfinding.',
+  description: `A priority queue is a structural variant of the standard queue in which elements bypass the FIFO ordering rule based on an associated priority value — the element with the highest (or lowest) priority is always dequeued first, regardless of insertion order. This data structure models scenarios where not all waiting items are equally urgent: in a hospital emergency room, critical patients are treated before minor injuries regardless of arrival time; in an operating system's CPU scheduler, high-priority system processes preempt lower-priority user tasks.
+
+Priority queues can be implemented using several underlying data structures, each with different performance characteristics. The simplest approach — an unsorted array — provides O(1) insertion but O(n) dequeue (since finding the highest-priority element requires a linear scan). A sorted array reverses this trade-off: O(n) insertion (maintaining sort order) but O(1) dequeue (the highest-priority element is always at a known position). A binary heap provides the optimal balance: O(log n) for both insertion and extraction, making it the standard implementation for production priority queues. This topic focuses on the array-based and linked-list-based implementations that reinforce the data structure concepts covered earlier in the curriculum.
+
+Priority queues are a critical component of many important algorithms: Dijkstra's shortest-path algorithm uses a min-priority queue to greedily select the next closest vertex, Huffman coding uses a min-priority queue to build optimal prefix codes for data compression, and event-driven simulations use priority queues to process events in chronological order. Understanding priority queues also deepens the student's appreciation for the relationship between data structure choice and algorithmic efficiency — the same algorithm can be O(n²) or O(n log n) depending on whether a naive or heap-based priority queue is used.`,
   difficulty: 'advanced',
   prerequisites: ['u3-t14'],
   estimatedMinutes: 60,

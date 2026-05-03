@@ -5,7 +5,11 @@ export const pointerToStructures: Topic = {
   unitId: 'unit-3',
   title: 'Pointer to Structures',
   slug: 'pointer-to-structures',
-  description: 'In systems programming, copying large structures by value is an unacceptable performance bottleneck. By passing 8-byte memory addresses instead, pointers unlock high-speed data manipulation, dynamic heap allocation, and the creation of complex linked architectures like trees and graphs.',
+  description: `In systems programming, copying large structures by value — duplicating hundreds or thousands of bytes onto the stack every time a structure is passed to a function — is an unacceptable performance bottleneck. By passing an 8-byte pointer (on a 64-bit system) instead of the structure itself, pointers eliminate this copying overhead entirely while simultaneously enabling the called function to modify the original structure's data in place. This combination of efficiency and mutability makes structure pointers the dominant access pattern in professional C code.
+
+Structure pointers introduce the arrow operator (->), which is syntactic sugar for the dereference-then-dot operation: ptr->member is exactly equivalent to (*ptr).member. The parentheses in the expanded form are mandatory because the dot operator has higher precedence than the dereference operator, and writing *ptr.member would be parsed incorrectly. The arrow operator eliminates this precedence trap and is universally used whenever accessing structure members through a pointer.
+
+Beyond function parameter passing, structure pointers are the enabling mechanism for dynamic memory allocation (creating structures on the heap with malloc that outlive the creating function) and for building all pointer-linked data structures: linked lists (where each node contains a pointer to the next node), binary trees (where each node contains pointers to its children), graphs, hash tables with chaining, and any other data structure whose topology is determined at runtime rather than compile time. Mastering structure pointers is therefore prerequisite for the entire data structures curriculum that follows.`,
   difficulty: 'advanced',
   prerequisites: ['u2-t3', 'u3-t4', 'u3-t5'],
   estimatedMinutes: 60,

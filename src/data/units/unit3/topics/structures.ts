@@ -5,7 +5,11 @@ export const structures: Topic = {
   unitId: 'unit-3',
   title: 'Structures',
   slug: 'structures',
-  description: 'The architectural foundation of object-oriented programming. Structures allow you to fuse disparate, heterogeneous data types (integers, floats, arrays) into a single, cohesive block of RAM, creating custom data types tailored to your application.',
+  description: `Structures (struct) are C's primary mechanism for data abstraction — the ability to define custom composite data types that group multiple variables of potentially different types into a single, named entity. Where an array stores N elements of the same type, a structure stores a fixed set of named fields, each of which can be a different type (integers, floats, character arrays, pointers, or even other structures). This capability is the conceptual foundation of object-oriented programming: a structure is essentially a class without methods, grouping logically related data into a single memory block that can be declared, copied, passed to functions, and returned from functions as a single unit.
+
+At the memory level, a structure declaration instructs the compiler to lay out the member fields sequentially within a contiguous block of memory, inserting padding bytes as needed to satisfy the CPU's alignment requirements. The distinction between definition (creating the type blueprint with struct Player { ... };) and declaration (allocating memory with struct Player p1;) is fundamental: a definition generates no machine code and allocates no memory; it merely registers a new type with the compiler's type system. This two-phase model mirrors the separation between function prototypes and function implementations.
+
+Mastering structures requires understanding memory padding and alignment (sizeof(struct) is almost never the simple sum of member sizes), the typedef pattern that eliminates verbose struct-keyword repetition, shallow-copy semantics of the assignment operator (byte-for-byte duplication that shares pointer targets rather than duplicating pointed-to data), and nested composition (embedding structures within structures to build hierarchical data models). These concepts form the essential foundation for pointers to structures, arrays of structures, dynamic memory allocation, and linked data structures covered in subsequent topics.`,
   difficulty: 'intermediate',
   prerequisites: ['u1-t5'],
   estimatedMinutes: 60,

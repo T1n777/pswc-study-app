@@ -5,7 +5,11 @@ export const pragma: Topic = {
   unitId: 'unit-3',
   title: '#pragma',
   slug: 'pragma',
-  description: 'Special compiler directives (meta-programming) used to turn engine features on/off or radically modify how the C compiler translates your code into machine instructions, such as overriding hardware memory alignment rules.',
+  description: `Pragma directives (#pragma) are special preprocessor commands that provide implementation-specific instructions to the C compiler, allowing the programmer to control aspects of compilation and code generation that lie outside the scope of the standard C language. Unlike standard preprocessor directives (#include, #define, #ifdef) which are portable across all conforming compilers, pragmas are inherently compiler-specific: a pragma understood by GCC may be ignored or interpreted differently by MSVC or Clang.
+
+The most widely used pragma is #pragma pack, which overrides the compiler's default memory alignment rules for structures. Normally, the compiler inserts padding bytes between structure members to satisfy the CPU's alignment requirements (e.g., ensuring that a 4-byte int starts at a 4-byte boundary). #pragma pack(1) disables all padding, forcing the compiler to lay out structure members with no gaps — essential when the structure must match an exact byte layout defined by a network protocol specification, a binary file format, or a hardware register map. However, this comes at a performance cost: misaligned memory accesses may be slower or even cause hardware faults on some architectures.
+
+Other commonly encountered pragmas include #pragma once (a non-standard but widely supported alternative to include guards that prevents a header file from being included more than once), #pragma GCC diagnostic (which enables or disables specific compiler warnings within a region of code), and #pragma comment (used by MSVC to embed linker directives). Because pragmas are by nature non-portable, professional codebases typically isolate them behind conditional compilation guards (#ifdef _MSC_VER / #ifdef __GNUC__) to maintain cross-platform compatibility.`,
   difficulty: 'advanced',
   prerequisites: ['u3-t5'],
   estimatedMinutes: 30,

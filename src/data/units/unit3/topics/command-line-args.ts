@@ -5,7 +5,11 @@ export const commandLineArgs: Topic = {
   unitId: 'unit-3',
   title: 'Command Line Arguments',
   slug: 'command-line-args',
-  description: 'The critical gateway between the Operating System and your program. Learn how the shell constructs the `argc` and `argv` memory layout to inject external data into the `main` function before execution begins.',
+  description: `Command-line arguments are the critical gateway between the operating system's shell and your C program — the mechanism through which the user injects external data into the program before execution begins. When you type ./myprogram input.txt 42 in a terminal, the shell tokenises this command string into three separate arguments, allocates memory for each string, and passes them to your program's main function via the argc (argument count) and argv (argument vector) parameters.
+
+Understanding the memory layout of argc and argv is essential. argc is a simple integer indicating how many arguments were provided (always at least 1, because argv[0] is the program's own name). argv is an array of char pointers (char *argv[]), where each element points to a null-terminated string representing one argument. argv[0] is the program name, argv[1] is the first user argument, and so on through argv[argc-1]. The array is null-terminated: argv[argc] is guaranteed to be NULL, providing an alternative iteration sentinel.
+
+Because all command-line arguments arrive as strings (character arrays), numeric arguments must be explicitly converted using functions like atoi() (ASCII to integer), atof() (ASCII to float), or the safer strtol()/strtod() variants that provide error detection. Forgetting this conversion and attempting to use argv[1] as a number directly is a type error that the compiler may not catch. Proper defensive programming also requires checking argc before accessing argv elements — accessing argv[2] when the user provided only one argument reads a NULL pointer, causing undefined behaviour. This topic provides the foundation for writing command-line utilities that follow the Unix philosophy of composable, scriptable programs.`,
   difficulty: 'intermediate',
   prerequisites: ['u3-t1', 'u2-t5'],
   estimatedMinutes: 45,

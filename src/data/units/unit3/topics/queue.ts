@@ -5,7 +5,11 @@ export const queue: Topic = {
   unitId: 'unit-3',
   title: 'Queue',
   slug: 'queue',
-  description: 'The architectural embodiment of First-In, First-Out (FIFO). Queues are the backbone of asynchronous processing, network packet buffering, and breadth-first search algorithms.',
+  description: `A queue is a linear data structure that enforces the First-In, First-Out (FIFO) access discipline: elements are added at the rear (enqueue) and removed from the front (dequeue), ensuring that the element that has waited the longest is always served next. This ordering discipline mirrors real-world queues — customers in a checkout line, print jobs in a printer queue, network packets awaiting transmission — and is fundamentally different from a stack's LIFO policy.
+
+Queues are the backbone of asynchronous processing, buffering, and scheduling systems throughout computing. The operating system's CPU scheduler uses a ready queue to determine which process runs next. Network routers buffer incoming packets in queues when the outgoing link is temporarily busy. Message-passing systems (like producer-consumer architectures) use queues to decouple the rate of data production from the rate of data consumption. Breadth-first search (BFS) — one of the two fundamental graph traversal algorithms — uses a queue to explore nodes level by level, ensuring the shortest path is found in unweighted graphs.
+
+This topic covers array-based implementations (both linear and circular, where the circular variant reuses freed array slots by wrapping the front and rear indices around using modular arithmetic) and linked-list-based implementations (where enqueue appends a new node at the tail and dequeue removes the node at the head). The circular array implementation is particularly important because it solves the "false overflow" problem of linear arrays — where the array appears full because the rear index has reached the end, even though front slots have been freed by previous dequeue operations.`,
   difficulty: 'advanced',
   prerequisites: ['u3-t12'],
   estimatedMinutes: 60,

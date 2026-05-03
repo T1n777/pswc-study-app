@@ -5,7 +5,11 @@ export const sorting: Topic = {
   unitId: 'unit-2',
   title: 'Sorting Algorithms',
   slug: 'sorting',
-  description: 'Sorting data is arguably the most common operation performed by software worldwide. From displaying high scores to organizing databases, bringing order to chaos is essential. In this topic, we will explore the three classic O(N²) sorting algorithms: Bubble, Selection, and Insertion Sort. While modern languages use faster, more complex sorts under the hood, these three algorithms are the foundation of computer science. Mastering them will teach you how to analyze algorithm efficiency, optimize redundant loops, and understand the concept of "stability" in data.',
+  description: `Sorting — rearranging a collection of elements into a defined order — is arguably the most studied operation in computer science and one of the most frequently performed operations in software worldwide. From displaying leaderboards to organising database records, from rendering graphics to compressing data, bringing order to unstructured data is a prerequisite for efficient processing. This topic covers the three classic O(n²) comparison-based sorting algorithms: Bubble Sort, Selection Sort, and Insertion Sort.
+
+While modern production systems use more sophisticated algorithms (quicksort, mergesort, timsort) that achieve O(n log n) average-case performance, the three elementary algorithms serve as indispensable pedagogical tools. Each one teaches a different algorithmic strategy — Bubble Sort works by repeatedly swapping adjacent out-of-order elements, Selection Sort finds the minimum element and places it in its final position, and Insertion Sort builds a sorted sub-array by inserting each new element into its correct position. Understanding these strategies develops the ability to analyse algorithm efficiency (best-case, average-case, and worst-case time complexity), to reason about loop invariants (what property the sorted portion maintains after each iteration), and to understand the concept of algorithmic stability (whether equal elements preserve their original relative order).
+
+Mastering these algorithms also provides concrete practice with nested loop structures, swap operations using temporary variables, index tracking, and the relationship between loop structure and time complexity — skills that transfer directly to more complex algorithms and to the analysis of any code containing nested iterations.`,
   difficulty: 'intermediate',
   prerequisites: ['u2-t10'],
   estimatedMinutes: 90,

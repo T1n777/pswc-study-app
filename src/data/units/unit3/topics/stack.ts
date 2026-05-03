@@ -5,7 +5,11 @@ export const stack: Topic = {
   unitId: 'unit-3',
   title: 'Stack',
   slug: 'stack',
-  description: 'The architectural embodiment of Last-In, First-Out (LIFO). A mathematically restricted data structure that powers the CPU Call Stack, algorithm recursion, and state-reversal mechanisms.',
+  description: `A stack is a mathematically restricted linear data structure that enforces the Last-In, First-Out (LIFO) access discipline: the only element that can be examined or removed is the one most recently added. This restriction, far from being a limitation, is what gives stacks their power — by constraining the interface to just two operations (push to add an element to the top, pop to remove the element from the top), stacks enforce an access pattern that naturally models problems involving nesting, reversal, and state history.
+
+At the hardware level, the CPU's call stack is itself a stack data structure: each function call pushes a new frame containing local variables, parameters, and the return address; each function return pops that frame and resumes the caller. Understanding this connection between the abstract stack data structure and the CPU's physical call mechanism deepens comprehension of recursion (each recursive call pushes a frame, and the unwinding phase pops frames), stack overflow (pushing more frames than the stack's memory allocation allows), and how iterative solutions that use an explicit stack can replace recursive algorithms.
+
+In software, stacks are used to evaluate arithmetic expressions (converting infix to postfix notation and evaluating the result), to implement undo/redo systems (each action is pushed onto the undo stack), to check balanced brackets in compilers, to manage browser navigation history (the back button pops the most recent page), and as the fundamental data structure in depth-first search (DFS) graph traversal. This topic covers both array-based and linked-list-based stack implementations, along with the classic stack applications that appear frequently in technical interviews.`,
   difficulty: 'advanced',
   prerequisites: ['u3-t12'],
   estimatedMinutes: 60,

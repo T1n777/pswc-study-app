@@ -4,15 +4,18 @@ export interface SettingsSlice {
   theme: 'dark' | 'light';
   fontSize: 'sm' | 'md' | 'lg';
   sidebarCollapsed: boolean;
+  mobileSidebarOpen: boolean;
   toggleTheme: () => void;
   setFontSize: (size: 'sm' | 'md' | 'lg') => void;
   toggleSidebar: () => void;
+  setMobileSidebarOpen: (open: boolean) => void;
 }
 
 export const createSettingsSlice: StateCreator<SettingsSlice> = (set) => ({
   theme: 'dark',
   fontSize: 'md',
   sidebarCollapsed: false,
+  mobileSidebarOpen: false,
 
   toggleTheme: () => {
     set((state) => ({
@@ -27,4 +30,6 @@ export const createSettingsSlice: StateCreator<SettingsSlice> = (set) => ({
       sidebarCollapsed: !state.sidebarCollapsed,
     }));
   },
+
+  setMobileSidebarOpen: (open: boolean) => set({ mobileSidebarOpen: open }),
 });

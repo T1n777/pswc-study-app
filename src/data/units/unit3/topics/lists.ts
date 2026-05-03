@@ -5,7 +5,11 @@ export const lists: Topic = {
   unitId: 'unit-3',
   title: 'Linked Lists',
   slug: 'lists',
-  description: 'Breaking free from the rigid memory constraints of arrays. By dynamically linking isolated chunks of Heap memory via pointers, Linked Lists provide infinite theoretical capacity and absolute architectural flexibility.',
+  description: `Linked lists are the first truly dynamic data structure in the C curriculum — a collection of individually heap-allocated nodes connected by pointers, where each node contains both a data payload and a pointer to the next node in the sequence. Unlike arrays, which allocate a fixed, contiguous block of memory at declaration time, linked lists grow and shrink one node at a time through malloc and free, with no upper bound on capacity other than available system memory.
+
+This pointer-based architecture provides two fundamental advantages over arrays: O(1) insertion and deletion at any known position (since no elements need to be shifted), and the elimination of the resize-and-copy overhead that dynamic arrays incur when they outgrow their allocated capacity. The trade-off is the loss of O(1) random access — accessing the k-th element of a linked list requires traversing k pointers from the head, giving O(k) access time — and worse cache performance, because nodes are scattered across the heap rather than stored contiguously.
+
+This topic covers the three primary linked list variants: singly linked lists (each node points to its successor), doubly linked lists (each node points to both its successor and predecessor, enabling bidirectional traversal), and circular linked lists (the last node's next pointer points back to the head, forming a ring). Mastering linked lists requires fluency with pointer manipulation, dynamic memory allocation, and defensive programming against NULL pointer dereferences — skills that transfer directly to every pointer-based data structure (trees, graphs, hash tables) in the remainder of the curriculum.`,
   difficulty: 'advanced',
   prerequisites: ['u3-t4', 'u3-t8'],
   estimatedMinutes: 120,

@@ -5,7 +5,11 @@ export const searching: Topic = {
   unitId: 'unit-2',
   title: 'Searching Algorithms',
   slug: 'searching',
-  description: 'Once you can store data in arrays, the immediate next challenge is finding specific information within that data. Searching is one of the most fundamental operations in computer science. In this topic, we will explore the two primary approaches to finding data in an array: Linear Search (the brute-force method) and Binary Search (the elegant, optimized method). Understanding the massive performance difference between these two algorithms is your first real introduction to the concept of Time Complexity (Big O Notation) and why organizing your data is just as important as writing the code itself.',
+  description: `Searching — locating a specific element within a collection of data — is one of the most fundamental operations in computer science, performed billions of times per second across the world's computing infrastructure. This topic explores the two primary searching strategies in C: Linear Search, which examines every element sequentially from first to last, and Binary Search, which exploits the sorted order of data to eliminate half of the remaining search space with each comparison.
+
+The performance difference between these two algorithms is staggering and serves as the student's first substantive introduction to algorithmic complexity (Big O notation). Linear Search has O(n) time complexity: in the worst case, it must examine every element, so doubling the data size doubles the search time. Binary Search has O(log₂ n) time complexity: each comparison eliminates half the remaining candidates, so searching one billion sorted elements requires at most 30 comparisons instead of one billion. This exponential efficiency gap means that the choice of algorithm — and the decision to keep data sorted — can transform an operation from seconds to nanoseconds.
+
+However, Binary Search carries a strict prerequisite: the data must already be sorted. If the data arrives unsorted, the cost of sorting (typically O(n log n)) must be amortised over multiple searches to justify the investment. Understanding this trade-off between data organisation cost and search efficiency is a foundational lesson in algorithm design that applies far beyond these two specific algorithms.`,
   difficulty: 'intermediate',
   prerequisites: ['u2-t1'],
   estimatedMinutes: 50,

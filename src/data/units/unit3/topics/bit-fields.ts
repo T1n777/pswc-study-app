@@ -5,7 +5,11 @@ export const bitFields: Topic = {
   unitId: 'unit-3',
   title: 'Bit Fields',
   slug: 'bit-fields',
-  description: 'In extreme performance environments like embedded microcontrollers and high-speed network protocols, wasting 7 bits of memory to store a simple boolean is architecturally unacceptable. Bit fields allow you to dissect bytes mathematically, packing multiple integers into surgically precise memory layouts.',
+  description: `In extreme performance environments like embedded microcontrollers, real-time operating systems, and high-speed network protocol implementations, wasting 7 bits of memory to store a simple boolean flag (which requires only 1 bit) or 28 bits to store a 4-bit field is architecturally unacceptable. Bit fields are a C language feature that allows the programmer to specify exactly how many bits each structure member should occupy, enabling multiple small integers to be packed into a single byte or word with surgical precision.
+
+A bit field is declared by appending a colon and a width specifier to a structure member: struct Flags { unsigned int active : 1; unsigned int mode : 3; unsigned int level : 4; }. This instructs the compiler to pack the three fields into a single byte (1 + 3 + 4 = 8 bits) rather than allocating a separate 4-byte integer for each. The memory savings compound dramatically in arrays of thousands of such structures — a common pattern in hardware register mappings, network packet headers, and sensor data buffers.
+
+However, bit fields come with significant portability and performance caveats. The C standard leaves the physical layout of bit fields largely implementation-defined: the order of bits within a byte (MSB-first vs LSB-first), whether a bit field can straddle a storage-unit boundary, and the signedness of plain int bit fields all vary between compilers and platforms. Accessing individual bit fields may also be slower than accessing full-width integers, because the CPU must perform additional shift and mask operations to extract or modify the targeted bits within the larger storage unit. For portable, performance-critical code, manual bitwise operations (shifts, masks, AND/OR) are often preferred over bit fields despite their greater syntactic complexity.`,
   difficulty: 'advanced',
   prerequisites: ['u3-t5'],
   estimatedMinutes: 30,

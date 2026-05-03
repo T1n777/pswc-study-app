@@ -5,7 +5,11 @@ export const enums: Topic = {
   unitId: 'unit-3',
   title: 'Enums',
   slug: 'enums',
-  description: 'In software architecture, "magic numbers"—undocumented integers scattered throughout code—are a primary source of unmaintainable logic. Enumerations (`enum`) solve this by allowing you to define a rigorous, named vocabulary of integer constants, transforming abstract numbers into self-documenting code perfectly suited for managing complex state machines.',
+  description: `In software engineering, "magic numbers" — undocumented integer literals scattered throughout source code — are a primary source of unmaintainable, error-prone logic. Enumerations (enum) solve this problem by allowing the programmer to define a named vocabulary of integer constants that the compiler substitutes during compilation: instead of writing state = 3, you write state = FAILED, making the code self-documenting and resistant to the errors that arise when the meaning of a raw integer is forgotten or misremembered.
+
+Under the hood, C enumerations are purely a compile-time abstraction with zero runtime overhead. The compiler assigns each enumerator an integer value (starting from 0 by default, incrementing by 1 for each subsequent name, with optional manual overrides), replaces every occurrence of the name with its integer value during compilation, and discards the name entirely from the compiled binary. This means that enum variables are just int variables at runtime, and C does not enforce type safety — assigning an arbitrary integer to an enum variable compiles without error, even if that integer does not correspond to any defined enumerator.
+
+Despite this lack of type safety, disciplined use of enumerations dramatically improves code quality. Switch statements on enum values make program logic explicit and self-documenting; modern compilers with -Wswitch can warn when a switch fails to cover all enumerators, catching logical omissions at compile time. The typedef pattern (typedef enum { ... } TypeName) eliminates verbose syntax, and the lookup table pattern (using enum values as array indices) provides an efficient mechanism for converting enum values to their string representations for logging, debugging, and user-facing output.`,
   difficulty: 'beginner',
   prerequisites: ['u1-t5'],
   estimatedMinutes: 30,

@@ -5,7 +5,7 @@ export const fileIoRedirection: Topic = {
   unitId: 'unit-4',
   title: 'File I/O Using Redirection',
   slug: 'file-io-redirection',
-  description: `How to use the operating system's command line to redirect input from files and output to files without changing a single line of your C code.`,
+  description: `I/O redirection is one of the most powerful features of the Unix operating system model, and understanding it transforms your mental model of how C programs interact with the outside world. Every running C process inherits three open file descriptors from the operating system kernel: file descriptor 0 (stdin, connected to the keyboard by default), file descriptor 1 (stdout, connected to the terminal display), and file descriptor 2 (stderr, also connected to the terminal). These are not special language constructs — they are ordinary kernel-managed byte streams that the shell can reconnect to arbitrary files, pipes, or devices before your program even begins executing. When you type ./app < input.txt > output.txt, the shell opens input.txt on descriptor 0 and output.txt on descriptor 1, then launches your process. Your C code calls scanf and printf exactly as before, entirely unaware that it is reading from and writing to disk files rather than a human at a keyboard. This separation of mechanism (the program's I/O logic) from policy (where the data actually comes from and goes to) is a foundational principle of Unix design, and it is what makes small, single-purpose C utilities composable into arbitrarily complex data-processing pipelines.`,
   difficulty: 'beginner',
   prerequisites: ['u1-t3'],
   estimatedMinutes: 45,
@@ -14,7 +14,11 @@ export const fileIoRedirection: Topic = {
       id: 'u4-t1-s1',
       title: 'Standard Streams and Redirection Operators',
       slug: 'standard-streams-redirection',
-      description: 'Every time a C program runs, the OS automatically connects it to three "streams" of data. Redirection allows you to change where these streams connect.',
+      description: `When the operating system kernel creates a new process via the fork/exec system call sequence, it initialises the process's file descriptor table with three pre-opened entries: descriptor 0 (stdin), descriptor 1 (stdout), and descriptor 2 (stderr). At the kernel level, each descriptor is simply an index into a per-process table of open file objects — there is nothing inherently "keyboard-like" or "screen-like" about them. The C standard library maps these descriptors to the global FILE* variables stdin, stdout, and stderr declared in <stdio.h>, and all formatted I/O functions route through them: printf writes to stdout, scanf reads from stdin, and fprintf(stderr, ...) writes to stderr.
+
+Redirection operators in the shell (< for input, > for output) work by manipulating these file descriptors before calling exec to launch your program. The command ./app < data.txt causes the shell to open data.txt with the open() system call, duplicate that file descriptor onto descriptor 0 using dup2(), and then close the original — all before your main() function is ever invoked. Your program's scanf calls read bytes from the file exactly as they would from the keyboard buffer, because at the system-call level both are just read(0, buffer, count). This transparency is the reason redirection requires zero code changes: the abstraction boundary is the file descriptor, not the physical device.
+
+The performance implications are significant. Reading from a disk file via redirection is dramatically faster than interactive keyboard input because the kernel can read entire disk blocks (typically 4 KB) into its page cache in a single I/O operation, whereas keyboard input arrives one keystroke at a time with unpredictable human delays. For batch processing of large datasets, redirection eliminates the interactive bottleneck entirely, turning a conversational program into an automated data-processing tool.`,
       keyPoints: [
         'stdin (Standard Input): Stream 0. By default, connected to the Keyboard. Functions like scanf and fgets read from here.',
         'stdout (Standard Output): Stream 1. By default, connected to the Terminal screen. Functions like printf write here.',
@@ -111,7 +115,11 @@ export const fileIoRedirection: Topic = {
       id: 'u4-t1-s2',
       title: 'Advanced Redirection and Piping',
       slug: 'advanced-redirection-piping',
-      description: 'Appending to files, redirecting errors, and chaining multiple programs together.',
+      description: `Beyond basic input and output redirection, the Unix shell provides append mode (>>), error stream redirection (2>), and the pipe operator (|), each of which exploits the file descriptor model in progressively more powerful ways. The append operator >> opens the destination file with the O_APPEND flag, which instructs the kernel to atomically seek to the end of the file before every write operation — this means concurrent appenders cannot interleave their output, a property that is critical for log files written by multiple processes.
+
+Error redirection (2>) reconnects file descriptor 2 (stderr) to a file while leaving descriptor 1 (stdout) untouched. This separation exists precisely because error messages and normal output serve different consumers: in a pipeline like ./generate | ./process > results.txt, you want data flowing through stdout into the pipe, but you want crash diagnostics appearing on your terminal screen via stderr. Without this separation, a fatal error message would silently vanish into the output file, and the operator would have no indication that anything went wrong.
+
+The pipe operator | is perhaps the most elegant Unix primitive. When you write ./prog1 | ./prog2, the shell creates a kernel pipe — a pair of connected file descriptors backed by a small in-memory buffer (typically 64 KB on Linux). The shell wires prog1's stdout to the write end and prog2's stdin to the read end, then launches both processes concurrently. Data flows directly through RAM without ever touching the disk, making pipes dramatically faster than the write-to-file-then-read-from-file alternative. If prog1 produces data faster than prog2 can consume it, the kernel automatically blocks prog1's write() call until space becomes available in the pipe buffer — a form of implicit flow control that requires no cooperation from either program. This composability is the engineering philosophy behind Unix: build small, focused tools that do one thing well, then combine them with pipes to solve complex problems.`,
       keyPoints: [
         "Append Redirection >>: Adds output to the END of a file. It does NOT erase the existing contents. (e.g., ./app >> log.txt).",
         "Error Redirection 2>: Redirects ONLY stderr to a file. Useful for saving crash logs. (e.g., ./app 2> errors.log).",
