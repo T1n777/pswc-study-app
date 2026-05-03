@@ -85,7 +85,8 @@ export function TheoryPracticePage() {
       </div>
 
       {/* Filter bar */}
-      <div className="glass-card p-4 flex items-center gap-3 flex-wrap">
+      <div className="glass-card p-4 flex flex-col md:flex-row md:items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
         <span className="text-xs text-[var(--color-text-tertiary)] uppercase tracking-wide">Filter by Unit:</span>
         <button 
           onClick={() => setSelectedUnit(null)}
@@ -100,11 +101,12 @@ export function TheoryPracticePage() {
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${selectedUnit === u.id ? 'bg-[var(--color-accent-primary)] text-white' : 'bg-[var(--color-bg-hover)] text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-active)] hover:text-[var(--color-text-primary)]'}`}
           >
             Unit {u.number}
-          </button>
-        ))}
+            </button>
+          ))}
+        </div>
         
-        <div className="flex-1"></div>
-        <div className="text-sm font-semibold text-[var(--color-text-primary)]">
+        <div className="flex-1 hidden md:block"></div>
+        <div className="text-sm font-semibold text-[var(--color-text-primary)] mt-2 md:mt-0 bg-[var(--color-bg-secondary)] px-3 py-1.5 rounded-lg border border-[var(--color-border-primary)] self-start md:self-auto">
           Score: <span className="text-[var(--color-accent-primary)]">{score}</span> / {answeredCount}
         </div>
       </div>
@@ -126,7 +128,7 @@ export function TheoryPracticePage() {
           {hasAnsweredCurrent && currentIndex < filteredQuestions.length - 1 && (
             <button 
               onClick={handleNext}
-              className="px-6 py-3 rounded-lg font-bold bg-[var(--color-accent-primary)] text-white hover:bg-[var(--color-accent-hover)] transition-colors w-full md:w-auto"
+              className="px-6 py-3 rounded-lg font-bold bg-[var(--color-accent-primary)] text-white hover:bg-[var(--color-accent-hover)] transition-colors w-full md:w-auto min-h-[44px]"
             >
               Next Question →
             </button>

@@ -39,7 +39,7 @@ export function ProgrammingPracticePage() {
       </div>
 
       {/* Filters */}
-      <div className="glass-card p-4 flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="glass-card p-4 flex flex-col md:flex-row md:items-center gap-4">
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-xs text-[var(--color-text-tertiary)] uppercase tracking-wide">Unit:</span>
           <button 

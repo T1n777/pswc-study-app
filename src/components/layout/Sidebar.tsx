@@ -247,25 +247,33 @@ function UnitAccordion({ unit, collapsed }: UnitAccordionProps) {
 
 // ─── Main Sidebar ───
 
-export function Sidebar() {
+interface SidebarProps {
+  forceMobileExpanded?: boolean;
+}
+
+export function Sidebar({ forceMobileExpanded }: SidebarProps = {}) {
   const sidebarCollapsed = useAppStore((s) => s.sidebarCollapsed);
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
+  const setMobileSidebarOpen = useAppStore((s) => s.setMobileSidebarOpen);
+
+  // When used in mobile drawer, always show expanded
+  const isCollapsed = forceMobileExpanded ? false : sidebarCollapsed;
 
   return (
     <aside
       className={cn(
         'fixed left-0 top-0 h-screen flex flex-col bg-[var(--color-bg-secondary)] border-r border-[var(--color-border-primary)] transition-all duration-300 z-40',
-        sidebarCollapsed ? 'w-16' : 'w-64'
+        forceMobileExpanded ? 'w-72' : (isCollapsed ? 'w-16' : 'w-64')
       )}
     >
       {/* Logo / Header */}
       <div className={cn(
         'flex items-center h-[var(--topbar-height)] border-b border-[var(--color-border-primary)] px-4 flex-shrink-0',
-        sidebarCollapsed && 'justify-center px-2'
+        isCollapsed && 'justify-center px-2'
       )}>
         <div className={cn(
           "flex items-center gap-2 flex-1 min-w-0 transition-all duration-300 whitespace-nowrap overflow-hidden",
-          sidebarCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+          isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
         )}>
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] flex items-center justify-center flex-shrink-0">
             <span className="text-white font-bold text-sm">C</span>
@@ -275,70 +283,82 @@ export function Sidebar() {
             <p className="text-[10px] text-[var(--color-text-tertiary)] truncate">UE25CS151B</p>
           </div>
         </div>
-        <button
-          onClick={toggleSidebar}
-          className="p-1.5 rounded-md hover:bg-[var(--color-bg-hover)] text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors flex-shrink-0"
-          title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          <svg className={cn('w-4 h-4 transition-transform', sidebarCollapsed && 'rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-          </svg>
-        </button>
+        {forceMobileExpanded ? (
+          <button
+            onClick={() => setMobileSidebarOpen(false)}
+            className="p-1.5 rounded-md hover:bg-[var(--color-bg-hover)] text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors flex-shrink-0"
+            aria-label="Close sidebar"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        ) : (
+          <button
+            onClick={toggleSidebar}
+            className="p-1.5 rounded-md hover:bg-[var(--color-bg-hover)] text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors flex-shrink-0"
+            title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            <svg className={cn('w-4 h-4 transition-transform', isCollapsed && 'rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Scrollable Content */}
       <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-1">
         {/* Main Navigation */}
-        <SidebarNavItem to="/" icon={<HomeIcon />} label="Dashboard" collapsed={sidebarCollapsed} />
+        <SidebarNavItem to="/" icon={<HomeIcon />} label="Dashboard" collapsed={isCollapsed} />
 
         {/* Divider + Section Label */}
         <p className={cn(
           "px-3 pt-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)] transition-all duration-300 whitespace-nowrap overflow-hidden",
-          sidebarCollapsed ? "h-0 w-0 opacity-0 p-0 m-0" : "opacity-100"
+          isCollapsed ? "h-0 w-0 opacity-0 p-0 m-0" : "opacity-100"
         )}>
           Curriculum
         </p>
-        {sidebarCollapsed && <div className="border-t border-[var(--color-border-primary)] my-2" />}
+        {isCollapsed && <div className="border-t border-[var(--color-border-primary)] my-2" />}
 
         {/* Unit Accordions */}
         {curriculumMap.map((unit) => (
-          <UnitAccordion key={unit.id} unit={unit} collapsed={sidebarCollapsed} />
+          <UnitAccordion key={unit.id} unit={unit} collapsed={isCollapsed} />
         ))}
 
         {/* Divider */}
         <p className={cn(
           "px-3 pt-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)] transition-all duration-300 whitespace-nowrap overflow-hidden",
-          sidebarCollapsed ? "h-0 w-0 opacity-0 p-0 m-0" : "opacity-100"
+          isCollapsed ? "h-0 w-0 opacity-0 p-0 m-0" : "opacity-100"
         )}>
           Practice
         </p>
-        {sidebarCollapsed && <div className="border-t border-[var(--color-border-primary)] my-2" />}
+        {isCollapsed && <div className="border-t border-[var(--color-border-primary)] my-2" />}
 
-        <SidebarNavItem to="/theory-practice" icon={<TheoryIcon />} label="Theory Practice" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/programming-practice" icon={<CodeIcon />} label="Coding Practice" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/quiz" icon={<QuizIcon />} label="Quiz Zone" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/output-prediction" icon={<EyeIcon />} label="Output Prediction" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/debugging-lab" icon={<BugIcon />} label="Debugging Lab" collapsed={sidebarCollapsed} />
+        <SidebarNavItem to="/theory-practice" icon={<TheoryIcon />} label="Theory Practice" collapsed={isCollapsed} />
+        <SidebarNavItem to="/programming-practice" icon={<CodeIcon />} label="Coding Practice" collapsed={isCollapsed} />
+        <SidebarNavItem to="/quiz" icon={<QuizIcon />} label="Quiz Zone" collapsed={isCollapsed} />
+        <SidebarNavItem to="/output-prediction" icon={<EyeIcon />} label="Output Prediction" collapsed={isCollapsed} />
+        <SidebarNavItem to="/debugging-lab" icon={<BugIcon />} label="Debugging Lab" collapsed={isCollapsed} />
 
         {/* Divider */}
         <p className={cn(
           "px-3 pt-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)] transition-all duration-300 whitespace-nowrap overflow-hidden",
-          sidebarCollapsed ? "h-0 w-0 opacity-0 p-0 m-0" : "opacity-100"
+          isCollapsed ? "h-0 w-0 opacity-0 p-0 m-0" : "opacity-100"
         )}>
           Resources
         </p>
-        {sidebarCollapsed && <div className="border-t border-[var(--color-border-primary)] my-2" />}
+        {isCollapsed && <div className="border-t border-[var(--color-border-primary)] my-2" />}
 
-        <SidebarNavItem to="/labs" icon={<BeakerIcon />} label="Lab Companion" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/revision" icon={<CardIcon />} label="Revision Notes" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/bookmarks" icon={<BookmarkIcon />} label="Bookmarks" collapsed={sidebarCollapsed} />
-        <SidebarNavItem to="/progress" icon={<ChartIcon />} label="Progress" collapsed={sidebarCollapsed} />
+        <SidebarNavItem to="/labs" icon={<BeakerIcon />} label="Lab Companion" collapsed={isCollapsed} />
+        <SidebarNavItem to="/revision" icon={<CardIcon />} label="Revision Notes" collapsed={isCollapsed} />
+        <SidebarNavItem to="/bookmarks" icon={<BookmarkIcon />} label="Bookmarks" collapsed={isCollapsed} />
+        <SidebarNavItem to="/progress" icon={<ChartIcon />} label="Progress" collapsed={isCollapsed} />
       </nav>
 
       {/* Footer */}
       <div className={cn(
         "p-3 border-t border-[var(--color-border-primary)] flex-shrink-0 transition-all duration-300 overflow-hidden whitespace-nowrap",
-        sidebarCollapsed ? "h-0 opacity-0 p-0 border-0" : "opacity-100"
+        isCollapsed ? "h-0 opacity-0 p-0 border-0" : "opacity-100"
       )}>
         <div className="glass-card p-3 text-center">
           <p className="text-xs text-[var(--color-text-tertiary)]">PES University</p>

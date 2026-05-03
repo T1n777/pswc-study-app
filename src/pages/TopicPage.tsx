@@ -78,7 +78,7 @@ export function TopicPage() {
       </div>
 
       {/* Topic Header */}
-      <div className="glass-card p-8">
+      <div className="glass-card p-4 md:p-8">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
@@ -133,7 +133,7 @@ export function TopicPage() {
             {topic.subtopics.length > 0 ? (
               <div className="space-y-8">
                 {topic.subtopics.map((subtopic) => (
-                  <div key={subtopic.id} className="glass-card p-6 md:p-8">
+                  <div key={subtopic.id} className="glass-card p-4 md:p-8">
                     <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-4">{subtopic.title}</h2>
                     <p className="text-lg text-[var(--color-text-secondary)] mb-6 leading-relaxed">{subtopic.description}</p>
                     
@@ -162,7 +162,7 @@ export function TopicPage() {
           <div className="space-y-8 animate-fade-in">
             {topic.subtopics.some((s) => s.codeExamples.length > 0) ? (
               topic.subtopics.flatMap((s) => s.codeExamples).map((example) => (
-                <div key={example.id} className="glass-card p-6 md:p-8 space-y-6">
+                <div key={example.id} className="glass-card p-4 md:p-8 space-y-6">
                   <div className="flex items-start justify-between">
                     <div>
                       <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-2">{example.title}</h3>
@@ -187,9 +187,9 @@ export function TopicPage() {
 
                   {/* Line-by-Line Breakdown */}
                   {example.lineBreakdown.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-[var(--color-border-primary)]">
+                    <div className="mt-6 pt-6 border-t border-[var(--color-border-primary)] overflow-x-auto">
                       <h4 className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-widest mb-4">Line Breakdown</h4>
-                      <div className="space-y-3">
+                      <div className="space-y-3 min-w-[500px] md:min-w-0">
                         {example.lineBreakdown.map((line, idx) => (
                           <div key={idx} className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-sm p-3 bg-[var(--color-bg-secondary)] rounded-lg">
                             <div className="flex items-center gap-3 sm:w-1/3 flex-shrink-0">
@@ -254,7 +254,7 @@ export function TopicPage() {
           <div className="space-y-6 animate-fade-in">
             {topic.subtopics.some((s) => s.commonMistakes.length > 0) ? (
               topic.subtopics.flatMap((s) => s.commonMistakes).map((mistake) => (
-                <div key={mistake.id} className="glass-card p-6 md:p-8 border-l-4 border-red-500">
+                <div key={mistake.id} className="glass-card p-4 md:p-8 border-l-4 border-red-500 overflow-x-auto">
                   <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-3 flex items-center gap-3">
                     <span className="text-red-500 text-2xl">⚠️</span> {mistake.title}
                   </h3>
@@ -321,7 +321,7 @@ export function TopicPage() {
               {topic.subtopics.some((s) => s.checkpoints.length > 0) ? (
                 <div className="grid md:grid-cols-2 gap-6">
                   {topic.subtopics.flatMap((s) => s.checkpoints).map((cp) => (
-                    <div key={cp.id} className="glass-card p-6 border-t-2 border-[var(--color-success)]">
+                    <div key={cp.id} className="glass-card p-4 md:p-6 border-t-2 border-[var(--color-success)]">
                       <h4 className="text-lg font-bold text-[var(--color-text-primary)] mb-2">{cp.title}</h4>
                       <p className="text-sm text-[var(--color-text-tertiary)] mb-4">{cp.description}</p>
                       <ul className="space-y-3">
@@ -346,7 +346,7 @@ export function TopicPage() {
               {topic.subtopics.some((s) => s.interviewCallouts.length > 0) ? (
                 <div className="space-y-4">
                   {topic.subtopics.flatMap((s) => s.interviewCallouts).map((callout) => (
-                    <div key={callout.id} className="glass-card p-6 border-l-4 border-[var(--color-warning)] bg-[var(--color-warning)]/5">
+                    <div key={callout.id} className="glass-card p-4 md:p-6 border-l-4 border-[var(--color-warning)] bg-[var(--color-warning)]/5">
                       <div className="flex items-center gap-3 mb-3">
                         <span className="text-2xl">💡</span>
                         <h4 className="text-lg font-bold text-[var(--color-text-primary)]">{callout.title}</h4>
@@ -507,7 +507,7 @@ function ProblemCard({ p }: { p: ProgrammingProblem }) {
   const [hintsRevealed, setHintsRevealed] = useState(0);
 
   return (
-    <div className="glass-card p-6 md:p-8 space-y-6">
+    <div className="glass-card p-4 md:p-8 space-y-6">
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -593,8 +593,8 @@ function ProblemCard({ p }: { p: ProgrammingProblem }) {
             {p.dryRun && p.dryRun.length > 0 && (
               <div>
                 <h5 className="text-sm font-bold text-[var(--color-text-primary)] mb-4">Dry Run Table</h5>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left border-collapse">
+                <div className="overflow-x-auto pb-2">
+                  <table className="w-full text-sm text-left border-collapse min-w-[600px] md:min-w-0">
                     <thead>
                       <tr className="border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-secondary)]">
                         <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs">Step</th>

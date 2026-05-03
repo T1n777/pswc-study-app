@@ -22,7 +22,7 @@ export function GDBWalkthrough({ walkthrough }: GDBWalkthroughProps) {
 
       <div className="grid md:grid-cols-2">
         {/* Left: Code Context */}
-        <div className="p-5 border-r border-[var(--color-border-primary)] bg-[var(--color-bg-primary)]">
+        <div className="p-5 border-b md:border-b-0 md:border-r border-[var(--color-border-primary)] bg-[var(--color-bg-primary)]">
           <h3 className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wide mb-3">Code Target</h3>
           <div className="text-sm text-[var(--color-text-secondary)]">
             <p>Target file: <code className="text-[var(--color-accent-primary)] font-mono">{walkthrough.programFile}</code></p>
@@ -62,7 +62,7 @@ export function GDBWalkthrough({ walkthrough }: GDBWalkthroughProps) {
 
           {/* Explanation & Controls */}
           <div className="p-5 border-t border-[var(--color-border-primary)] bg-[var(--color-bg-secondary)]">
-            <p className="text-sm text-[var(--color-text-primary)] mb-4 h-10">{step.explanation}</p>
+            <p className="text-sm text-[var(--color-text-primary)] mb-4 md:h-10 min-h-[40px]">{step.explanation}</p>
             
             <div className="flex items-center justify-between">
               <button

@@ -59,7 +59,7 @@ export function CodeBlock({
 
       {/* Code area */}
       {showLineNumbers ? (
-        <div className="overflow-x-auto bg-[var(--color-code-bg)]">
+        <div className="overflow-x-auto bg-[var(--color-code-bg)] text-xs md:text-sm">
           <table className="w-full border-collapse">
             <tbody>
               {lines.map((line, i) => (
@@ -67,7 +67,7 @@ export function CodeBlock({
                   key={i}
                   className={cn(highlightLines.includes(i + 1) && 'bg-[var(--color-code-line-highlight)]')}
                 >
-                  <td className="w-10 px-3 py-0 text-right text-[var(--color-text-muted)] text-xs font-mono select-none border-r border-[var(--color-code-border)] align-top leading-[1.7]">
+                  <td className="w-8 md:w-10 px-1 md:px-3 py-0 text-right text-[var(--color-text-muted)] text-[10px] md:text-xs font-mono select-none border-r border-[var(--color-code-border)] align-top leading-[1.7]">
                     {i + 1}
                   </td>
                   <td className="px-4 py-0">
@@ -86,12 +86,13 @@ export function CodeBlock({
             </tbody>
           </table>
         </div>
-      ) : (
-        <pre className="!rounded-none !border-0 !m-0">
-          <code ref={codeRef} className={`language-${language}`}>
-            {code}
-          </code>
-        </pre>
+        <div className="overflow-x-auto bg-[var(--color-code-bg)] text-xs md:text-sm">
+          <pre className="!rounded-none !border-0 !m-0 min-w-max">
+            <code ref={codeRef} className={`language-${language}`}>
+              {code}
+            </code>
+          </pre>
+        </div>
       )}
     </div>
   );

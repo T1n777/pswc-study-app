@@ -93,7 +93,7 @@ export function OutputPredictionPage() {
           </p>
         </div>
         
-        <div className="flex gap-4 items-center bg-[var(--color-bg-secondary)] px-4 py-3 rounded-xl border border-[var(--color-border-primary)]">
+        <div className="flex flex-wrap justify-center gap-4 items-center bg-[var(--color-bg-secondary)] px-4 py-3 rounded-xl border border-[var(--color-border-primary)] w-full md:w-auto mt-4 md:mt-0">
           <div className="text-center">
             <span className="text-xs text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">Score</span>
             <span className="text-xl font-bold text-[var(--color-success)]">{score}</span>
@@ -112,11 +112,11 @@ export function OutputPredictionPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-col md:flex-row flex-wrap gap-4">
         <select 
           value={selectedUnit} 
           onChange={(e) => handleFilterChange(setSelectedUnit, e.target.value)}
-          className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] block p-2.5"
+          className="w-full md:w-auto bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] block p-2.5"
         >
           <option value="all">All Units</option>
           {curriculumMap.map(u => (
@@ -127,7 +127,7 @@ export function OutputPredictionPage() {
         <select 
           value={selectedDifficulty} 
           onChange={(e) => handleFilterChange(setSelectedDifficulty, e.target.value)}
-          className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] block p-2.5"
+          className="w-full md:w-auto bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-accent-primary)] focus:border-[var(--color-accent-primary)] block p-2.5"
         >
           <option value="all">All Difficulties</option>
           <option value="beginner">Beginner</option>
@@ -150,7 +150,7 @@ export function OutputPredictionPage() {
 
           <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-6">{currentQuestion.question}</h3>
 
-          <div className="mb-6 rounded-xl overflow-hidden shadow-lg border border-[var(--color-border-secondary)]">
+          <div className="mb-6 rounded-xl overflow-x-auto shadow-lg border border-[var(--color-border-secondary)]">
             <CodeBlock code={currentQuestion.code || ''} />
           </div>
 
@@ -158,13 +158,13 @@ export function OutputPredictionPage() {
             <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-[var(--color-border-primary)]">
               <button
                 onClick={markWrong}
-                className="flex-1 px-6 py-3 bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-hover)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] font-bold rounded-lg transition-colors"
+                className="w-full md:w-auto flex-1 px-6 py-3 min-h-[44px] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-hover)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] font-bold rounded-lg transition-colors"
               >
                 I Got It Wrong
               </button>
               <button
                 onClick={markCorrect}
-                className="flex-1 px-6 py-3 bg-[var(--color-success)]/10 hover:bg-[var(--color-success)]/20 border border-[var(--color-success)]/20 text-[var(--color-success)] font-bold rounded-lg transition-colors"
+                className="w-full md:w-auto flex-1 px-6 py-3 min-h-[44px] bg-[var(--color-success)]/10 hover:bg-[var(--color-success)]/20 border border-[var(--color-success)]/20 text-[var(--color-success)] font-bold rounded-lg transition-colors"
               >
                 I Got It Right! (+1)
               </button>
@@ -185,7 +185,7 @@ export function OutputPredictionPage() {
                 <button
                   onClick={handleNext}
                   disabled={currentIndex === filteredQuestions.length - 1}
-                  className="px-8 py-3 bg-[var(--color-accent-primary)] hover:bg-[var(--color-accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors"
+                  className="w-full md:w-auto px-8 py-3 min-h-[44px] bg-[var(--color-accent-primary)] hover:bg-[var(--color-accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors"
                 >
                   {currentIndex === filteredQuestions.length - 1 ? 'End of Drills' : 'Next Question →'}
                 </button>

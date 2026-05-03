@@ -12,6 +12,7 @@ export function TopBar() {
   const streak = useAppStore((s) => s.streak);
   const toggleTheme = useAppStore((s) => s.toggleTheme);
   const theme = useAppStore((s) => s.theme);
+  const setMobileSidebarOpen = useAppStore((s) => s.setMobileSidebarOpen);
 
   // Generate breadcrumbs based on route
   const pathParts = location.pathname.split('/').filter(Boolean);
@@ -41,10 +42,22 @@ export function TopBar() {
 
   return (
     <>
-      <header className="h-14 border-b border-[var(--color-border-primary)] bg-[var(--color-bg-primary)]/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 lg:px-6">
+      <header className="h-14 border-b border-[var(--color-border-primary)] bg-[var(--color-bg-primary)]/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 lg:px-6 gap-2">
         
-        {/* Breadcrumbs (hidden on small mobile) */}
-        <nav className="hidden sm:flex items-center text-sm">
+        <div className="flex items-center gap-3 overflow-hidden">
+          {/* Hamburger Menu (Mobile Only) */}
+          <button
+            onClick={() => setMobileSidebarOpen(true)}
+            className="md:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--color-bg-hover)] text-[var(--color-text-secondary)] min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors flex-shrink-0"
+            aria-label="Open menu"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Breadcrumbs (Hidden on Mobile) */}
+          <nav className="hidden md:flex items-center text-sm overflow-hidden">
           {breadcrumbs.map((crumb, i) => (
             <div key={crumb.path} className="flex items-center">
               {i > 0 && (
@@ -65,9 +78,10 @@ export function TopBar() {
           ))}
         </nav>
 
-        {/* Mobile Title (visible only when breadcrumbs are hidden) */}
-        <div className="sm:hidden font-semibold text-[var(--color-text-primary)] truncate">
-          {breadcrumbs[breadcrumbs.length - 1].label}
+        {/* Mobile Title */}
+        <div className="md:hidden font-semibold text-[var(--color-text-primary)] truncate flex-1 text-left">
+          {breadcrumbs[breadcrumbs.length - 1]?.label}
+        </div>
         </div>
 
         {/* Right side actions */}
@@ -76,13 +90,13 @@ export function TopBar() {
           <button
             aria-label="Search"
             onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--color-bg-secondary)] border border-[var(--color-border-primary)] hover:border-[var(--color-border-secondary)] transition-colors text-sm text-[var(--color-text-muted)]"
+            className="flex items-center justify-center md:justify-start gap-2 px-2 md:px-3 py-1.5 md:min-w-0 min-w-[44px] min-h-[44px] rounded-lg md:bg-[var(--color-bg-secondary)] md:border border-[var(--color-border-primary)] border-transparent hover:border-[var(--color-border-secondary)] transition-colors text-sm text-[var(--color-text-muted)]"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-5 h-5 md:w-4 md:h-4 text-[var(--color-text-primary)] md:text-[var(--color-text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
             <span className="hidden md:inline">Search...</span>
-            <span className="hidden md:inline text-[10px] bg-[var(--color-bg-primary)] px-1.5 py-0.5 rounded border border-[var(--color-border-primary)] ml-2">Cmd+K</span>
+            <span className="hidden lg:inline text-[10px] bg-[var(--color-bg-primary)] px-1.5 py-0.5 rounded border border-[var(--color-border-primary)] ml-2">Cmd+K</span>
           </button>
 
           {/* Streak Indicator */}

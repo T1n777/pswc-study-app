@@ -18,7 +18,11 @@ export function RevisionPage() {
       </div>
 
       {/* Unit selector */}
-      <div className="flex gap-2 flex-wrap">
+      <div 
+        className="flex gap-2 overflow-x-auto whitespace-nowrap pb-2"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        <style>{`.overflow-x-auto::-webkit-scrollbar { display: none; }`}</style>
         {curriculumMap.map((u) => {
           const cardCount = u.topics.reduce(
             (acc, t) => acc + t.subtopics.reduce((subAcc, s) => subAcc + s.revisionCards.length, 0),
@@ -58,7 +62,7 @@ export function RevisionPage() {
                     <span className="w-1.5 h-6 bg-[var(--color-accent-primary)] rounded-full" />
                     {topic.title}
                   </h2>
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {cards.map((card) => (
                       <RevisionFlipCard key={card.id} front={card.front} back={card.back} />
                     ))}

@@ -13,7 +13,11 @@ interface TabsProps {
 export function Tabs({ tabs, activeTab, onChange, children, className }: TabsProps) {
   return (
     <div className={className}>
-      <div className="flex items-center gap-1 border-b border-[var(--color-border-primary)] overflow-x-auto">
+      <div 
+        className="flex items-center gap-1 border-b border-[var(--color-border-primary)] overflow-x-auto whitespace-nowrap"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        <style>{`.overflow-x-auto::-webkit-scrollbar { display: none; }`}</style>
         {tabs.map((tab) => (
           <button
             key={tab.id}

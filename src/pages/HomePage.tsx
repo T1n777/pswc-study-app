@@ -30,8 +30,8 @@ export function HomePage() {
     <div className="space-y-10">
       {/* Hero */}
       <div className="glass-card p-8">
-        <div className="flex items-start justify-between flex-wrap gap-6">
-          <div>
+        <div className="flex items-start justify-between flex-wrap md:flex-nowrap gap-6">
+          <div className="w-full md:w-auto">
             <h1 className="text-3xl font-bold mb-2">
               <span className="gradient-text">Problem Solving with C</span>
             </h1>
@@ -47,7 +47,9 @@ export function HomePage() {
               </div>
             )}
           </div>
-          <ProgressRing percentage={overallPercentage} size={90} label="Overall" />
+          <div className="w-full md:w-auto flex justify-center md:justify-end">
+            <ProgressRing percentage={overallPercentage} size={90} label="Overall" />
+          </div>
         </div>
       </div>
 
@@ -73,7 +75,7 @@ export function HomePage() {
       )}
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {[
           { label: 'Topics', value: allTopics.length, icon: '📚' },
           { label: 'Completed', value: completedTopics, icon: '✅' },
@@ -100,10 +102,10 @@ export function HomePage() {
               <Link
                 key={unit.id}
                 to={`/unit/${unit.slug}`}
-                className="glass-card p-6 hover:bg-[var(--color-bg-hover)] transition-all group hover:border-[var(--color-border-secondary)]"
+                className="glass-card p-4 md:p-6 hover:bg-[var(--color-bg-hover)] transition-all group hover:border-[var(--color-border-secondary)]"
               >
-                <div className="flex items-start justify-between gap-6">
-                  <div className="flex-1 min-w-0">
+                <div className="flex flex-col md:flex-row items-start justify-between gap-4 md:gap-6">
+                  <div className="flex-1 min-w-0 w-full">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge text={`Unit ${unit.number}`} variant="accent" />
                       <Badge text={`${unit.hours} hrs`} variant="default" />
@@ -115,7 +117,9 @@ export function HomePage() {
                       {unit.description}
                     </p>
                   </div>
-                  <ProgressRing percentage={Math.round((unitCompleted / unit.topics.length) * 100)} size={56} strokeWidth={4} />
+                  <div className="self-center md:self-auto flex-shrink-0">
+                    <ProgressRing percentage={Math.round((unitCompleted / unit.topics.length) * 100)} size={56} strokeWidth={4} />
+                  </div>
                 </div>
                 <ProgressBar
                   value={unitCompleted}
@@ -133,7 +137,7 @@ export function HomePage() {
       {/* Quick Links */}
       <div className="mt-10">
         <h2 className="text-xl font-semibold text-[var(--color-text-primary)] mb-6">Quick Access</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
           {[
             { label: 'Theory Practice', path: '/theory-practice', icon: '📖', color: 'var(--color-info)' },
             { label: 'Coding Practice', path: '/programming-practice', icon: '💻', color: 'var(--color-success)' },

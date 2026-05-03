@@ -22,7 +22,7 @@ export function VivaQuestions({ questions }: { questions: VivaQuestion[] }) {
         return (
           <div 
             key={idx} 
-            className="glass-card p-5 cursor-pointer hover:border-[var(--color-border-secondary)] transition-colors"
+            className="glass-card p-5 cursor-pointer hover:border-[var(--color-border-secondary)] transition-colors w-full"
             onClick={() => toggleReveal(idx)}
           >
             <div className="flex gap-4">

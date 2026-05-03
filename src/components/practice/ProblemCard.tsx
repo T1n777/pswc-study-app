@@ -46,11 +46,11 @@ export function ProblemCard({ problem, topicId }: ProblemCardProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <h3 className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wide mb-2">Sample Input</h3>
-          <pre className="text-sm text-[var(--color-code-string)] bg-[var(--color-bg-hover)] p-3 rounded-lg border border-[var(--color-border-primary)]">{problem.sampleInput}</pre>
+          <pre className="text-sm text-[var(--color-code-string)] bg-[var(--color-bg-hover)] p-3 rounded-lg border border-[var(--color-border-primary)] overflow-x-auto">{problem.sampleInput}</pre>
         </div>
         <div>
           <h3 className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wide mb-2">Sample Output</h3>
-          <pre className="text-sm text-[var(--color-success)] bg-[var(--color-bg-hover)] p-3 rounded-lg border border-[var(--color-border-primary)]">{problem.sampleOutput}</pre>
+          <pre className="text-sm text-[var(--color-success)] bg-[var(--color-bg-hover)] p-3 rounded-lg border border-[var(--color-border-primary)] overflow-x-auto">{problem.sampleOutput}</pre>
         </div>
       </div>
 
@@ -66,11 +66,11 @@ export function ProblemCard({ problem, topicId }: ProblemCardProps) {
       )}
 
       {/* Actions */}
-      <div className="flex flex-wrap gap-3 pt-4 border-t border-[var(--color-border-primary)]">
+      <div className="flex flex-col md:flex-row flex-wrap gap-3 pt-4 border-t border-[var(--color-border-primary)]">
         {problem.hints && problem.hints.length > 0 && (
           <button
             onClick={() => setShowHint(!showHint)}
-            className="px-4 py-2 rounded-lg text-sm font-medium border border-[var(--color-warning)] text-[var(--color-warning)] hover:bg-[var(--color-warning-bg)] transition-colors"
+            className="w-full md:w-auto px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium border border-[var(--color-warning)] text-[var(--color-warning)] hover:bg-[var(--color-warning-bg)] transition-colors"
           >
             {showHint ? 'Hide Hints' : 'Show Hints'}
           </button>
@@ -78,17 +78,17 @@ export function ProblemCard({ problem, topicId }: ProblemCardProps) {
         
         <button
           onClick={() => setShowSolution(!showSolution)}
-          className="px-4 py-2 rounded-lg text-sm font-medium border border-[var(--color-accent-primary)] text-[var(--color-accent-primary)] hover:bg-[var(--color-accent-glow)] transition-colors"
+          className="w-full md:w-auto px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium border border-[var(--color-accent-primary)] text-[var(--color-accent-primary)] hover:bg-[var(--color-accent-glow)] transition-colors"
         >
           {showSolution ? 'Hide Solution' : 'Show Solution'}
         </button>
 
-        <div className="flex-1" />
+        <div className="flex-1 hidden md:block" />
 
         {!isSolved && (
           <button
             onClick={handleMarkSolved}
-            className="px-4 py-2 rounded-lg text-sm font-medium bg-[var(--color-success)] text-white hover:opacity-90 transition-opacity flex items-center gap-2"
+            className="w-full md:w-auto px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium bg-[var(--color-success)] text-white hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             <span>✓</span> Mark as Solved
           </button>
