@@ -7,20 +7,15 @@ import { useAppStore } from '../../store';
 import { useEffect } from 'react';
 
 export function MainLayout() {
-  const theme = useAppStore((s) => s.theme);
   const sidebarCollapsed = useAppStore((s) => s.sidebarCollapsed);
   const mobileSidebarOpen = useAppStore((s) => s.mobileSidebarOpen);
   const setMobileSidebarOpen = useAppStore((s) => s.setMobileSidebarOpen);
   const location = useLocation();
 
-  // Apply theme to document
+  // Always use dark mode
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
+    document.documentElement.classList.add('dark');
+  }, []);
 
   // Close mobile sidebar on route change
   useEffect(() => {

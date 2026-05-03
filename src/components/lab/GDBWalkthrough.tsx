@@ -62,7 +62,12 @@ export function GDBWalkthrough({ walkthrough }: GDBWalkthroughProps) {
 
           {/* Explanation & Controls */}
           <div className="p-5 border-t border-[var(--color-border-primary)] bg-[var(--color-bg-secondary)]">
-            <p className="text-sm text-[var(--color-text-primary)] mb-4 md:h-10 min-h-[40px]">{step.explanation}</p>
+            <div className="mb-4 md:h-10 min-h-[40px]">
+              <span className="inline-block bg-[var(--color-accent-primary)] text-white text-[10px] font-bold px-2 py-0.5 rounded mr-2 uppercase tracking-widest align-middle">
+                Step {currentStep + 1}/{walkthrough.steps.length}
+              </span>
+              <span className="text-sm text-[var(--color-text-primary)] align-middle leading-relaxed">{step.explanation}</span>
+            </div>
             
             <div className="flex items-center justify-between">
               <button

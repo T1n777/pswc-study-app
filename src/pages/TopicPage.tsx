@@ -6,6 +6,7 @@ import { Tabs } from '../components/shared/Tabs';
 import { Badge, DifficultyBadge } from '../components/shared/Badge';
 import { BookmarkButton } from '../components/shared/BookmarkButton';
 import { EmptyState } from '../components/shared/EmptyState';
+import { DescriptionRenderer } from '../components/shared/DescriptionRenderer';
 import { CodeBlock } from '../components/content/CodeBlock';
 import { cn } from '../utils/cn';
 import type { TabItem, TheoryQuestion, ProgrammingProblem } from '../types';
@@ -88,7 +89,7 @@ export function TopicPage() {
               {progress?.status === 'in-progress' && <Badge text="In Progress" variant="warning" />}
             </div>
             <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-3">{topic.title}</h1>
-            <p className="text-base text-[var(--color-text-secondary)] mb-6">{topic.description}</p>
+            <DescriptionRenderer description={topic.description} className="mb-6" />
 
             <div className="flex items-center gap-4 flex-wrap">
               <button 
@@ -132,22 +133,25 @@ export function TopicPage() {
           <div className="space-y-8 animate-fade-in">
             {topic.subtopics.length > 0 ? (
               <div className="space-y-8">
-                {topic.subtopics.map((subtopic) => (
-                  <div key={subtopic.id} className="glass-card p-4 md:p-8">
-                    <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-4">{subtopic.title}</h2>
-                    <p className="text-lg text-[var(--color-text-secondary)] mb-6 leading-relaxed">{subtopic.description}</p>
-                    
-                    <h3 className="text-sm font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider mb-4 border-b border-[var(--color-border-primary)] pb-2">Key Concepts</h3>
+                {topic.subtopics.map((subtopic, idx) => (
+                  <div key={subtopic.id}>
+                    {idx > 0 && <hr className="my-8 border-t border-[var(--color-border-primary)]/50" />}
+                    <div className="glass-card p-4 md:p-8">
+                      <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-4">{subtopic.title}</h2>
+                      <DescriptionRenderer description={subtopic.description} className="mb-6" />
+                      
+                      <h3 className="text-sm font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider mt-8 mb-4 border-l-4 border-[var(--color-accent-primary)] pl-3">Key Concepts</h3>
                     {subtopic.keyPoints.length > 0 && (
                       <ul className="space-y-3">
                         {subtopic.keyPoints.map((point, i) => (
-                          <li key={i} className="flex items-start gap-3 text-base text-[var(--color-text-primary)]">
+                          <li key={i} className="flex items-start gap-3 text-base text-[var(--color-text-primary)] p-3 rounded-lg bg-[var(--color-bg-tertiary)] mb-3">
                             <span className="text-[var(--color-accent-primary)] mt-1 flex-shrink-0">✦</span>
                             <span className="leading-relaxed">{point}</span>
                           </li>
                         ))}
                       </ul>
                     )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -264,7 +268,7 @@ export function TopicPage() {
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-red-400"></span>
-                        Incorrect
+                        WRONG
                       </h4>
                       <div className="border border-red-500/30 rounded-xl overflow-hidden relative">
                         <div className="absolute inset-0 bg-red-500/5 pointer-events-none z-10" />
@@ -274,7 +278,7 @@ export function TopicPage() {
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-green-400 uppercase tracking-widest flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-green-400"></span>
-                        Correct
+                        CORRECT
                       </h4>
                       <div className="border border-green-500/30 rounded-xl overflow-hidden relative">
                         <div className="absolute inset-0 bg-green-500/5 pointer-events-none z-10" />
@@ -391,11 +395,11 @@ function RevisionFlipCard({ front, back }: { front: string; back: string }) {
   return (
     <div
       onClick={() => setFlipped(!flipped)}
-      className="glass-card p-6 cursor-pointer transition-all duration-300 min-h-[160px] flex items-center justify-center text-center group perspective-1000 relative"
-      style={{ transformStyle: 'preserve-3d' }}
+      className="glass-card p-6 cursor-pointer transition-transform duration-500 min-h-[160px] flex items-center justify-center text-center group perspective-1000 relative"
+      style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0)' }}
     >
       {flipped ? (
-        <div className="animate-fade-in w-full">
+        <div className="animate-fade-in w-full" style={{ transform: 'rotateY(180deg)' }}>
           <p className="text-xs font-bold text-[var(--color-accent-primary)] uppercase tracking-widest mb-3">Answer</p>
           <p className="text-base text-[var(--color-text-primary)] leading-relaxed">{back}</p>
         </div>
@@ -586,8 +590,12 @@ function ProblemCard({ p }: { p: ProgrammingProblem }) {
             </div>
 
             <div className="p-4 bg-[var(--color-bg-secondary)] rounded-lg border border-[var(--color-border-primary)]">
-              <h5 className="text-sm font-bold text-[var(--color-text-primary)] mb-2">Explanation</h5>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{p.solutionExplanation}</p>
+              <h5 className="text-sm font-bold text-[var(--color-text-primary)] mb-4">Explanation</h5>
+              <div className="space-y-4">
+                {p.solutionExplanation.split('\n\n').map((para, i) => (
+                  <p key={i} className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{para}</p>
+                ))}
+              </div>
             </div>
 
             {p.dryRun && p.dryRun.length > 0 && (
@@ -597,16 +605,16 @@ function ProblemCard({ p }: { p: ProgrammingProblem }) {
                   <table className="w-full text-sm text-left border-collapse min-w-[600px] md:min-w-0">
                     <thead>
                       <tr className="border-b border-[var(--color-border-secondary)] bg-[var(--color-bg-secondary)]">
-                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs">Step</th>
-                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs">Line</th>
-                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs">Variables</th>
-                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs">Output</th>
+                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs w-16">Step</th>
+                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs w-16">Line</th>
+                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs min-w-[120px]">Variables</th>
+                        <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs min-w-[100px]">Output</th>
                         <th className="p-3 font-bold text-[var(--color-text-tertiary)] uppercase text-xs">Explanation</th>
                       </tr>
                     </thead>
                     <tbody>
                       {p.dryRun.map((row, i) => (
-                        <tr key={i} className="border-b border-[var(--color-border-primary)] last:border-0 hover:bg-[var(--color-bg-hover)]/50 transition-colors">
+                        <tr key={i} className={`border-b border-[var(--color-border-primary)] last:border-0 hover:bg-[var(--color-bg-hover)]/50 transition-colors ${i % 2 === 0 ? 'bg-[var(--color-bg-secondary)]/50' : 'bg-transparent'}`}>
                           <td className="p-3 text-[var(--color-text-secondary)]">{row.step}</td>
                           <td className="p-3"><span className="px-2 py-0.5 bg-[var(--color-bg-secondary)] rounded font-mono text-xs border border-[var(--color-border-primary)]">L{row.line}</span></td>
                           <td className="p-3 font-mono text-xs text-[var(--color-accent-primary)] whitespace-pre-wrap">

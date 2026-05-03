@@ -112,8 +112,12 @@ export function ProblemCard({ problem, topicId }: ProblemCardProps) {
           <h3 className="text-sm font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wide">Reference Solution</h3>
           {problem.solutionExplanation && (
             <div className="p-4 bg-[var(--color-bg-hover)] rounded-lg">
-              <h4 className="text-sm font-semibold text-[var(--color-text-primary)] mb-1">Approach</h4>
-              <p className="text-sm text-[var(--color-text-secondary)]">{problem.solutionExplanation}</p>
+              <h4 className="text-sm font-semibold text-[var(--color-text-primary)] mb-3">Approach</h4>
+              <div className="space-y-4">
+                {problem.solutionExplanation.split('\n\n').map((para, i) => (
+                  <p key={i} className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{para}</p>
+                ))}
+              </div>
             </div>
           )}
           <CodeBlock code={problem.solution} />

@@ -38,10 +38,16 @@ export function VivaQuestions({ questions }: { questions: VivaQuestion[] }) {
                 )}>
                   <div className="overflow-hidden">
                     <div className="p-4 rounded-lg bg-[var(--color-bg-hover)] border-l-2 border-[var(--color-accent-primary)] text-sm text-[var(--color-text-primary)]">
-                      <span className="font-semibold text-[var(--color-accent-primary)] mr-2">A:</span>
-                      {q.answer}
+                      <div className="flex gap-2">
+                        <span className="font-semibold text-[var(--color-accent-primary)] flex-shrink-0">A:</span>
+                        <div className="space-y-4">
+                          {q.answer.split('\n\n').map((para, i) => (
+                            <p key={i} className="leading-relaxed">{para}</p>
+                          ))}
+                        </div>
+                      </div>
                       {q.followUp && (
-                        <div className="mt-2 pt-2 border-t border-[var(--color-border-primary)] text-[var(--color-text-secondary)]">
+                        <div className="mt-4 pt-3 border-t border-[var(--color-border-primary)] text-[var(--color-text-secondary)]">
                           <span className="font-medium text-[var(--color-text-primary)]">Follow-up:</span> {q.followUp}
                         </div>
                       )}

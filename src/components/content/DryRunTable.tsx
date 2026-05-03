@@ -22,17 +22,17 @@ export function DryRunTable({ steps, className }: DryRunTableProps) {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-[var(--color-bg-tertiary)]">
-              <th className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-text-tertiary)] border-b border-[var(--color-border-primary)]">Step</th>
-              <th className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-text-tertiary)] border-b border-[var(--color-border-primary)]">Line</th>
+              <th className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-text-tertiary)] border-b border-[var(--color-border-primary)] w-16">Step</th>
+              <th className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-text-tertiary)] border-b border-[var(--color-border-primary)] w-16">Line</th>
               {allVarNames.map((name) => (
-                <th key={name} className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-accent-primary)] border-b border-[var(--color-border-primary)] font-mono">{name}</th>
+                <th key={name} className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-accent-primary)] border-b border-[var(--color-border-primary)] font-mono min-w-[80px]">{name}</th>
               ))}
-              <th className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-text-tertiary)] border-b border-[var(--color-border-primary)]">Output</th>
+              <th className="px-3 py-2 text-left text-xs font-semibold text-[var(--color-text-tertiary)] border-b border-[var(--color-border-primary)] min-w-[100px]">Output</th>
             </tr>
           </thead>
           <tbody>
             {steps.map((step, i) => (
-              <tr key={step.step} className={cn('border-b border-[var(--color-border-primary)] last:border-0', i % 2 === 0 ? 'bg-[var(--color-bg-secondary)]' : 'bg-[var(--color-bg-card)]')}>
+              <tr key={step.step} className={cn('border-b border-[var(--color-border-primary)] last:border-0 hover:bg-[var(--color-bg-hover)]/50 transition-colors', i % 2 === 0 ? 'bg-[var(--color-bg-secondary)]/50' : 'bg-transparent')}>
                 <td className="px-3 py-2.5 text-xs font-mono text-[var(--color-text-muted)]">{step.step}</td>
                 <td className="px-3 py-2.5 text-xs font-mono text-[var(--color-accent-tertiary)]">L{step.line}</td>
                 {allVarNames.map((name) => {

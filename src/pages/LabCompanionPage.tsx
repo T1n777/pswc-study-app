@@ -3,6 +3,7 @@ import { getLabBySlug } from '../data';
 import { CodeBlock } from '../components/content/CodeBlock';
 import { VivaQuestions } from '../components/lab/VivaQuestions';
 import { GDBWalkthrough } from '../components/lab/GDBWalkthrough';
+import { DescriptionRenderer } from '../components/shared/DescriptionRenderer';
 
 export function LabCompanionPage() {
   const { labSlug } = useParams<{ labSlug: string }>();
@@ -18,12 +19,7 @@ export function LabCompanionPage() {
         <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mb-2">
           Lab {lab.number}: {lab.title}
         </h1>
-        <p className="text-sm text-[var(--color-text-secondary)] mb-4">
-          <span className="font-semibold text-[var(--color-text-primary)]">Objective:</span> {lab.objective}
-        </p>
-        <p className="text-sm text-[var(--color-text-secondary)]">
-          {lab.description}
-        </p>
+        <DescriptionRenderer description={`Objective: ${lab.objective}\n\n${lab.description}`} />
       </div>
 
       {/* Solution Code */}
