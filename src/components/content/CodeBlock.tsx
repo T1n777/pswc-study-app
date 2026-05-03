@@ -86,6 +86,7 @@ export function CodeBlock({
             </tbody>
           </table>
         </div>
+      ) : (
         <div className="overflow-x-auto bg-[var(--color-code-bg)] text-xs md:text-sm">
           <pre className="!rounded-none !border-0 !m-0 min-w-max">
             <code ref={codeRef} className={`language-${language}`}>
