@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { cn } from '../../utils/cn';
 
 interface DescriptionRendererProps {

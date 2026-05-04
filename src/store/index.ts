@@ -23,7 +23,6 @@ export const useAppStore = create<AppStore>()(
         streak: state.streak,
         totalTimeSpent: state.totalTimeSpent,
         bookmarks: state.bookmarks,
-        theme: state.theme,
         fontSize: state.fontSize,
         sidebarCollapsed: state.sidebarCollapsed,
       }),
