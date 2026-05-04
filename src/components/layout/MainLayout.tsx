@@ -58,23 +58,15 @@ export function MainLayout() {
       {/* Main Content */}
       <div
         className="flex flex-col min-h-screen transition-[margin-left] duration-300 ease-in-out md:ml-64"
-        style={sidebarCollapsed ? { marginLeft: undefined } : undefined}
+        style={sidebarCollapsed ? { marginLeft: '64px' } : undefined}
       >
-        {/* Dynamic margin via inline style for desktop only */}
-        <style>{`
-          @media (min-width: 768px) {
-            .main-offset { margin-left: ${sidebarCollapsed ? '64px' : '256px'} !important; }
-          }
-        `}</style>
-        <div className="main-offset flex flex-col min-h-screen">
-          <TopBar />
+        <TopBar />
           <main className="flex-1 overflow-y-auto scroll-smooth pb-20 md:pb-0">
             <div className="max-w-5xl mx-auto p-4 md:p-8 lg:p-10 w-full animate-fade-in">
               <Outlet />
             </div>
           </main>
           <ScrollToTop />
-        </div>
       </div>
 
       {/* Mobile Navigation */}

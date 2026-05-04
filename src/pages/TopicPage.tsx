@@ -69,14 +69,7 @@ export function TopicPage() {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* Breadcrumbs */}
-      <div className="text-sm text-[var(--color-text-muted)] flex items-center gap-2">
-        <Link to="/" className="hover:text-[var(--color-text-primary)] transition-colors">Home</Link>
-        <span>›</span>
-        <Link to={`/unit/${unit.slug}`} className="hover:text-[var(--color-text-primary)] transition-colors">{unit.title}</Link>
-        <span>›</span>
-        <span className="text-[var(--color-text-secondary)]">{topic.title}</span>
-      </div>
+
 
       {/* Topic Header */}
       <div className="glass-card p-4 md:p-8">

@@ -46,7 +46,7 @@ export function TopBar() {
           {/* Hamburger Menu (Mobile Only) */}
           <button
             onClick={() => setMobileSidebarOpen(true)}
-            className="md:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--color-bg-hover)] text-[var(--color-text-secondary)] min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors flex-shrink-0"
+            className="md:hidden p-2 rounded-lg hover:bg-[var(--color-bg-hover)] text-[var(--color-text-secondary)] flex items-center justify-center transition-colors"
             aria-label="Open menu"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
